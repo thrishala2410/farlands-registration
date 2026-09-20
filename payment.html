@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farlands — UPI Payment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/hackathon.css" />
+    <style>
+      .pay-page { max-width: 720px; margin: 0 auto; padding: 48px 20px 80px; color: var(--fl-ink, #e8efe8); }
+      .pay-card { background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 28px; }
+      .pay-card h1 { margin: 0 0 8px; font-size: 1.6rem; }
+      .pay-muted { opacity: 0.75; font-size: 0.95rem; line-height: 1.6; }
+      .pay-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 20px 0; }
+      .pay-grid article { background: rgba(255,255,255,0.04); border-radius: 10px; padding: 12px; }
+      .pay-grid span { display: block; font-size: 11px; letter-spacing: 0.08em; opacity: 0.65; margin-bottom: 6px; }
+      .pay-qr { width: 240px; height: 240px; object-fit: contain; background: #fff; border-radius: 12px; padding: 8px; }
+      .pay-row { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; margin: 20px 0; }
+      .pay-form label { display: block; margin: 12px 0 6px; font-size: 0.9rem; }
+      .pay-form input[type="text"], .pay-form input[type="file"] { width: 100%; max-width: 420px; padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); color: inherit; }
+      .pay-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+      .pay-msg { margin: 12px 0; padding: 10px 12px; border-radius: 8px; background: rgba(255,180,0,0.12); }
+      .pay-ok { background: rgba(40,180,90,0.15); }
+      .pay-err { background: rgba(220,60,60,0.15); }
+      .pay-btn { cursor: pointer; border: none; border-radius: 10px; padding: 12px 18px; font-weight: 600; background: #3d9a5f; color: #fff; }
+      .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+      .pay-secondary { background: transparent; border: 1px solid rgba(255,255,255,0.25); color: inherit; border-radius: 10px; padding: 10px 14px; cursor: pointer; }
+      code.upi { font-size: 1.05rem; }
+      @media (max-width: 640px) { .pay-grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body style="background:#0b120e;min-height:100vh;">
+    <main class="pay-page">
+      <p><a href="/" style="color:inherit;opacity:0.8;">← Back to Farlands</a></p>
+      <section class="pay-card" id="pay-root">
+        <h1>Complete UPI payment</h1>
+        <p class="pay-muted">Scan the QR or pay the official UPI ID, then submit your transaction ID and an unedited screenshot. Status stays <strong>pending</strong> until an organizer verifies it.</p>
+        <div id="pay-message" class="pay-msg" hidden></div>
+        <div id="pay-loading" class="pay-muted">Loading payment portal…</div>
+        <div id="pay-body" hidden>
+          <div class="pay-grid">
+            <article><span>TEAM / REGISTRATION</span><strong id="pay-reg">—</strong></article>
+            <article><span>FEE</span><strong id="pay-amount">—</strong></article>
+            <article><span>STATUS</span><strong id="pay-status">—</strong></article>
+          </div>
+          <div id="pay-verified" hidden>
+            <h2>✓ Payment verified</h2>
+            <p class="pay-muted">Your registration is confirmed.</p>
+          </div>
+          <div id="pay-pending" hidden>
+            <h2>Under verification</h2>
+            <p class="pay-muted">Proof submitted. Do not pay again unless asked.</p>
+            <button type="button" class="pay-secondary" id="btn-view-proof">View submitted screenshot</button>
+          </div>
+          <div id="pay-collect">
+            <div class="pay-row">
+              <img id="pay-qr" class="pay-qr" src="/payment/upi_qr.jpeg" alt="UPI QR code" onerror="this.src='/payment/upi-qr.jpeg'" />
+              <div>
+                <span class="pay-muted">SCAN TO PAY</span>
+                <p>UPI ID</p>
+                <code class="upi" id="pay-upi">—</code>
+                <div class="pay-actions">
+                  <button type="button" class="pay-secondary" id="btn-upi-app">Open UPI app</button>
+                </div>
+                <p class="pay-muted" style="margin-top:10px;">Pay the exact fee. Opening the UPI app does not auto-verify payment.</p>
+              </div>
+            </div>
+            <form class="pay-form" id="pay-form">
+              <h2>Submit payment proof</h2>
+              <label for="utr">UPI transaction ID / UTR</label>
+              <input id="utr" name="utr" type="text" required minlength="6" maxlength="64" pattern="[A-Za-z0-9-]{6,64}" placeholder="Enter UTR from your UPI app" autocomplete="off" />
+              <label for="screenshot">Payment screenshot <span class="pay-muted">PNG, JPEG, or WebP · up to 5 MB</span></label>
+              <input id="screenshot" name="screenshot" type="file" accept="image/png,image/jpeg,image/webp" required />
+              <div class="pay-actions">
+                <button type="submit" class="pay-btn" id="btn-submit-proof">Submit payment proof</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div id="pay-auth" hidden>
+          <p class="pay-muted">You need an active team session to submit payment proof. Register first, or sign in with your Team ID.</p>
+          <p><a href="/#section-register">Go to registration</a></p>
+        </div>
+      </section>
+    </main>
+    <script type="module">
+      const $ = (id) => document.getElementById(id);
+      const msg = (text, kind = '') => {
+        const el = $('pay-message');
+        el.hidden = !text;
+        el.textContent = text || '';
+        el.className = 'pay-msg' + (kind ? ' ' + kind : '');
+      };
+
+      let data = null;
+
+      function formatAmount(fee, currency) {
+        try {
+          return new Intl.NumberFormat('en-IN', { style: 'currency', currency: currency || 'INR', maximumFractionDigits: 0 }).format((fee || 0) / 100);
+        } catch {
+          return `₹${((fee || 0) / 100).toFixed(0)}`;
+        }
+      }
+
+      function render() {
+        if (!data) return;
+        $('pay-loading').hidden = true;
+        $('pay-body').hidden = false;
+        $('pay-reg').textContent = data.registration?.number || data.registration?.id || '—';
+        $('pay-amount').textContent = formatAmount(data.registration?.feeAmount, data.registration?.currency);
+        const payment = data.payment;
+        const paid = payment?.status === 'paid' || payment?.status === 'verified';
+        const pending = payment?.status === 'pending_verification' || payment?.status === 'pending';
+        $('pay-status').textContent = paid ? 'CONFIRMED' : pending ? 'UNDER VERIFICATION' : payment?.status === 'payment_failed' || payment?.status === 'rejected' ? 'RESUBMISSION REQUIRED' : 'PAYMENT PENDING';
+        $('pay-upi').textContent = data.paymentInstructions?.upiId || '—';
+        if (data.paymentInstructions?.qrPath) $('pay-qr').src = data.paymentInstructions.qrPath;
+        $('pay-verified').hidden = !paid;
+        $('pay-pending').hidden = !pending;
+        $('pay-collect').hidden = !!(paid || pending);
+      }
+
+      async function load() {
+        const response = await fetch('/api/payments/status', { credentials: 'include', cache: 'no-store' });
+        if (response.status === 401) {
+          $('pay-loading').hidden = true;
+          $('pay-auth').hidden = false;
+          return;
+        }
+        const payload = await response.json().catch(() => null);
+        if (!response.ok) {
+          msg((payload && payload.error) || 'Could not load payment information.', 'pay-err');
+          $('pay-loading').hidden = true;
+          return;
+        }
+        data = payload;
+        render();
+      }
+
+      $('btn-upi-app')?.addEventListener('click', () => {
+        if (!data?.paymentInstructions?.upiId) return;
+        const uri = new URL('upi://pay');
+        uri.searchParams.set('pa', data.paymentInstructions.upiId);
+        uri.searchParams.set('pn', 'Farlands Hackathon');
+        uri.searchParams.set('am', ((data.registration?.feeAmount || 0) / 100).toFixed(2));
+        uri.searchParams.set('cu', data.registration?.currency || 'INR');
+        uri.searchParams.set('tn', data.registration?.number || 'Farlands');
+        window.location.assign(uri.toString());
+      });
+
+      $('btn-view-proof')?.addEventListener('click', async () => {
+        if (!data?.payment?.id) return;
+        const response = await fetch(`/api/payments/proof/${data.payment.id}`, { credentials: 'include', cache: 'no-store' });
+        const payload = await response.json().catch(() => null);
+        if (!response.ok || !payload?.url) {
+          msg((payload && payload.error) || 'Screenshot unavailable.', 'pay-err');
+          return;
+        }
+        window.open(payload.url, '_blank', 'noopener,noreferrer');
+      });
+
+      $('pay-form')?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const utr = $('utr').value.trim().toUpperCase();
+        const file = $('screenshot').files?.[0];
+        if (!file) { msg('Select your payment screenshot first.', 'pay-err'); return; }
+        const btn = $('btn-submit-proof');
+        btn.disabled = true;
+        msg(null);
+        try {
+          const form = new FormData();
+          form.set('utr', utr);
+          form.set('screenshot', file);
+          const response = await fetch('/api/payments/submit-proof', { method: 'POST', body: form, credentials: 'include', cache: 'no-store' });
+          const payload = await response.json().catch(() => null);
+          if (!response.ok) throw new Error((payload && payload.error) || 'Proof could not be submitted.');
+          msg('Payment proof submitted. The organizer will verify it shortly.', 'pay-ok');
+          $('utr').value = '';
+          $('screenshot').value = '';
+          await load();
+        } catch (error) {
+          msg(error instanceof Error ? error.message : 'Proof could not be submitted.', 'pay-err');
+        } finally {
+          btn.disabled = false;
+        }
+      });
+
+      load().catch(() => {
+        $('pay-loading').hidden = true;
+        msg('Payment portal unavailable. Ensure the API server is running.', 'pay-err');
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "name": "farlands",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c yellow,cyan \"npm:dev:server\" \"npm:dev:frontend\"",
+    "dev:server": "tsx watch server/index.ts",
+    "dev:frontend": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "start": "tsx server/index.ts",
+    "test": "tsx --test tests/api-authorization.test.ts backend/tests/manual-payment.test.ts backend/tests/rate-limit.test.ts backend/tests/security-authorization.test.ts backend/tests/team-id.test.ts backend/tests/validation.test.ts && node --test tests/timeline.test.js",
+    "test:live": "tsx --env-file=.env.local --test backend/tests/live-integration.test.ts",
+    "test:browser": "node tests/browser.mjs",
+    "typecheck": "tsc --noEmit",
+    "provision:admin": "tsx --env-file=.env.local scripts/provision-admin.ts"
+  },
+  "dependencies": {
+    "@supabase/server": "^1.4.1",
+    "@supabase/supabase-js": "^2.109.0",
+    "three": "0.180.0",
+    "ws": "^8.21.3",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.55.0",
+    "@types/node": "^20",
+    "@types/ws": "^8.5.14",
+    "concurrently": "^9.1.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5",
+    "vite": "6.3.6"
+  }
+}

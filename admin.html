@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#d5e5e4" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Admin — Farlands Hackathon 2026</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%233c6250' d='M16 2 30 9v14L16 30 2 23V9z'/%3E%3Cpath fill='%239cbb8a' d='m16 2 14 7-14 7L2 9z'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body class="admin-body">
+    <div id="admin-app">
+      <!-- Login view -->
+      <section id="admin-login-view" class="admin-shell" aria-labelledby="admin-login-title">
+        <div class="admin-card">
+          <div class="admin-brand">
+            <svg viewBox="0 0 28 30" aria-hidden="true"><path d="m14 1 12 7v14l-12 7L2 22V8zM2 8l12 7 12-7M14 15v14"/></svg>
+            <div>
+              <p class="admin-eyebrow">Farlands · Organizer</p>
+              <h1 id="admin-login-title">Admin sign in</h1>
+            </div>
+          </div>
+          <p class="admin-lede">Use the organizer account provisioned for this event. Sessions use HttpOnly cookies.</p>
+          <form id="admin-login-form" class="admin-form" novalidate>
+            <label class="admin-field">
+              <span>Email</span>
+              <input id="admin-email" name="email" type="email" autocomplete="username" required placeholder="admin@example.com" />
+            </label>
+            <label class="admin-field">
+              <span>Password</span>
+              <input id="admin-password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" />
+            </label>
+            <p id="admin-login-error" class="admin-error" role="alert" hidden></p>
+            <button type="submit" class="admin-btn-primary" id="admin-login-btn">Sign in</button>
+          </form>
+          <p class="admin-foot"><a href="/">← Back to registration site</a></p>
+        </div>
+      </section>
+
+      <!-- Dashboard view -->
+      <section id="admin-dash-view" class="admin-dash" hidden>
+        <header class="admin-topbar">
+          <div class="admin-brand compact">
+            <svg viewBox="0 0 28 30" aria-hidden="true"><path d="m14 1 12 7v14l-12 7L2 22V8zM2 8l12 7 12-7M14 15v14"/></svg>
+            <span>Farlands Admin</span>
+          </div>
+          <nav class="admin-tabs" aria-label="Admin sections">
+            <button type="button" data-tab="stats" class="is-active">Overview</button>
+            <button type="button" data-tab="teams">Teams</button>
+            <button type="button" data-tab="participants">Participants</button>
+            <button type="button" data-tab="payments">Payments</button>
+          </nav>
+          <button type="button" class="admin-btn-ghost" id="admin-logout-btn">Sign out</button>
+        </header>
+
+        <main class="admin-main">
+          <div id="admin-banner" class="admin-banner" hidden role="status"></div>
+
+          <div id="panel-stats" class="admin-panel">
+            <h2>Overview</h2>
+            <div class="admin-stat-grid" id="stats-grid">
+              <div class="admin-stat"><span class="label">Loading…</span><strong>—</strong></div>
+            </div>
+          </div>
+
+          <div id="panel-teams" class="admin-panel" hidden>
+            <div class="admin-panel-head">
+              <h2>Teams</h2>
+              <input type="search" id="teams-search" placeholder="Search team name or ID…" class="admin-search" />
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table" id="teams-table">
+                <thead>
+                  <tr><th>Team ID</th><th>Name</th><th>Status</th><th>Created</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="panel-participants" class="admin-panel" hidden>
+            <div class="admin-panel-head">
+              <h2>Participants</h2>
+              <input type="search" id="participants-search" placeholder="Search name or email…" class="admin-search" />
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table" id="participants-table">
+                <thead>
+                  <tr><th>Name</th><th>Email</th><th>Participant ID</th><th>Status</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="panel-payments" class="admin-panel" hidden>
+            <div class="admin-panel-head">
+              <h2>Payment proofs</h2>
+              <select id="payments-status" class="admin-search">
+                <option value="">All statuses</option>
+                <option value="pending_verification">Pending verification</option>
+                <option value="paid">Paid</option>
+                <option value="payment_failed">Rejected</option>
+              </select>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table" id="payments-table">
+                <thead>
+                  <tr><th>UTR</th><th>Amount</th><th>Status</th><th>Submitted</th><th>Actions</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </section>
+    </div>
+    <script type="module" src="/src/admin.js"></script>
+  </body>
+</html>
