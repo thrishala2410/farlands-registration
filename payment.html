@@ -3,101 +3,530 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#d5e5e4" />
     <title>Farlands — UPI Payment</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%233c6250' d='M16 2 30 9v14L16 30 2 23V9z'/%3E%3Cpath fill='%239cbb8a' d='m16 2 14 7-14 7L2 9z'/%3E%3C/svg%3E" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/src/hackathon.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
     <style>
-      .pay-page { max-width: 720px; margin: 0 auto; padding: 48px 20px 80px; color: var(--fl-ink, #e8efe8); }
-      .pay-card { background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 28px; }
-      .pay-card h1 { margin: 0 0 8px; font-size: 1.6rem; }
-      .pay-muted { opacity: 0.75; font-size: 0.95rem; line-height: 1.6; }
-      .pay-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 20px 0; }
-      .pay-grid article { background: rgba(255,255,255,0.04); border-radius: 10px; padding: 12px; }
-      .pay-grid span { display: block; font-size: 11px; letter-spacing: 0.08em; opacity: 0.65; margin-bottom: 6px; }
-      .pay-qr { width: 240px; height: 240px; object-fit: contain; background: #fff; border-radius: 12px; padding: 8px; }
-      .pay-row { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; margin: 20px 0; }
-      .pay-form label { display: block; margin: 12px 0 6px; font-size: 0.9rem; }
-      .pay-form input[type="text"], .pay-form input[type="file"] { width: 100%; max-width: 420px; padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); color: inherit; }
-      .pay-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
-      .pay-msg { margin: 12px 0; padding: 10px 12px; border-radius: 8px; background: rgba(255,180,0,0.12); }
-      .pay-ok { background: rgba(40,180,90,0.15); }
-      .pay-err { background: rgba(220,60,60,0.15); }
-      .pay-btn { cursor: pointer; border: none; border-radius: 10px; padding: 12px 18px; font-weight: 600; background: #3d9a5f; color: #fff; }
-      .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-      .pay-secondary { background: transparent; border: 1px solid rgba(255,255,255,0.25); color: inherit; border-radius: 10px; padding: 10px 14px; cursor: pointer; }
-      code.upi { font-size: 1.05rem; }
-      @media (max-width: 640px) { .pay-grid { grid-template-columns: 1fr; } }
+      :root {
+        --bg: #d5e5e4;
+        --surface: #edf0e8;
+        --surface-2: #f4f6f0;
+        --ink: #29483e;
+        --muted: #5d776d;
+        --accent: #3c6250;
+        --accent-hover: #2f5040;
+        --border: rgba(54, 94, 71, 0.13);
+        --shadow: 0 8px 40px rgba(41, 72, 62, 0.08);
+        --ok: #1f5c38;
+        --ok-bg: #d8f0e0;
+        --warn: #7a5b12;
+        --warn-bg: #f5edd4;
+        --err: #8c3232;
+        --err-bg: #f5ddd8;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        min-height: 100vh;
+        background:
+          radial-gradient(ellipse 100% 60% at 50% -10%, rgba(156, 187, 138, 0.35), transparent 55%),
+          linear-gradient(180deg, #d0e0df 0%, var(--bg) 35%, #e8efe6 100%);
+        color: var(--ink);
+        font-family: "DM Sans", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .wrap {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 28px 18px 72px;
+      }
+
+      .back {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        transition: color 0.15s;
+      }
+      .back:hover { color: var(--accent); }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 28px 26px 32px;
+        box-shadow: var(--shadow);
+      }
+
+      .card h1 {
+        font-family: "Manrope", sans-serif;
+        font-size: 1.65rem;
+        font-weight: 800;
+        letter-spacing: -0.45px;
+        color: var(--ink);
+        margin-bottom: 8px;
+      }
+
+      .lede {
+        color: var(--muted);
+        font-size: 0.94rem;
+        line-height: 1.65;
+        max-width: 54ch;
+        margin-bottom: 22px;
+      }
+
+      .lede strong { color: var(--ink); font-weight: 600; }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+
+      .stat {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 14px 14px;
+      }
+
+      .stat span {
+        display: block;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+
+      .stat strong {
+        font-family: "Manrope", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--ink);
+        word-break: break-all;
+        line-height: 1.35;
+      }
+
+      .status-ok { color: var(--ok) !important; }
+      .status-pending { color: var(--warn) !important; }
+      .status-fail { color: var(--err) !important; }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        align-items: start;
+      }
+
+      .panel {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 2px 16px rgba(41, 72, 62, 0.04);
+      }
+
+      .panel-title {
+        font-family: "Manrope", sans-serif;
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+
+      .qr-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .qr-box img {
+        width: min(220px, 100%);
+        aspect-ratio: 1;
+        object-fit: contain;
+        background: #fff;
+        border-radius: 14px;
+        padding: 10px;
+        border: 1px solid var(--border);
+        box-shadow: 0 6px 24px rgba(41, 72, 62, 0.08);
+      }
+
+      .upi-line {
+        margin-top: 16px;
+        width: 100%;
+        text-align: left;
+      }
+
+      .upi-line label {
+        display: block;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+
+      .upi-value {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 12px;
+      }
+
+      .upi-value code {
+        flex: 1;
+        font-size: 0.88rem;
+        font-weight: 600;
+        word-break: break-all;
+        color: var(--ink);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .icon-btn {
+        flex-shrink: 0;
+        border: 1px solid rgba(60, 98, 80, 0.25);
+        background: rgba(60, 98, 80, 0.08);
+        color: var(--accent);
+        border-radius: 8px;
+        padding: 7px 11px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        font-family: "DM Sans", system-ui, sans-serif;
+        transition: background 0.15s;
+      }
+      .icon-btn:hover { background: rgba(60, 98, 80, 0.16); }
+
+      .hint {
+        margin-top: 12px;
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.55;
+        text-align: left;
+        width: 100%;
+      }
+      .hint strong { color: var(--ink); }
+
+      .btn {
+        border: none;
+        border-radius: 999px;
+        padding: 13px 18px;
+        font: 700 13px/1 "Manrope", sans-serif;
+        letter-spacing: 0.02em;
+        cursor: pointer;
+        transition: background 0.15s, transform 0.12s, border-color 0.15s, opacity 0.15s;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #f4f6f0;
+        width: 100%;
+      }
+      .btn-primary:hover:not(:disabled) {
+        background: var(--accent-hover);
+        transform: translateY(-1px);
+      }
+      .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+      .btn-ghost {
+        background: transparent;
+        border: 1.5px solid rgba(60, 98, 80, 0.28);
+        color: var(--accent);
+      }
+      .btn-ghost:hover {
+        background: rgba(60, 98, 80, 0.06);
+        border-color: var(--accent);
+      }
+
+      .form-group { margin-bottom: 14px; }
+
+      .form-group label {
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+
+      .form-group input[type="text"] {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(54, 94, 71, 0.2);
+        background: var(--surface-2);
+        color: var(--ink);
+        font: 500 15px/1.4 "DM Sans", system-ui, sans-serif;
+        transition: border-color 0.15s, box-shadow 0.15s;
+      }
+      .form-group input[type="text"]:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(60, 98, 80, 0.15);
+      }
+
+      .form-group input[type="file"] {
+        width: 100%;
+        padding: 14px;
+        border-radius: 10px;
+        border: 1.5px dashed rgba(54, 94, 71, 0.28);
+        background: var(--surface-2);
+        color: var(--muted);
+        font-size: 13px;
+        cursor: pointer;
+      }
+      .form-group input[type="file"]:hover {
+        border-color: var(--accent);
+        background: #fff;
+      }
+
+      .form-hint {
+        margin-top: 5px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .msg {
+        margin-bottom: 16px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-size: 13px;
+        line-height: 1.45;
+        border: 1px solid transparent;
+        font-weight: 500;
+      }
+      .msg-ok { background: var(--ok-bg); border-color: rgba(31, 92, 56, 0.2); color: var(--ok); }
+      .msg-err { background: var(--err-bg); border-color: rgba(140, 50, 50, 0.2); color: var(--err); }
+
+      .state-box {
+        text-align: center;
+        padding: 36px 20px;
+        border-radius: 16px;
+        background: #fff;
+        border: 1px solid var(--border);
+      }
+
+      .state-box .icon {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 14px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 1.5rem;
+        background: var(--ok-bg);
+        color: var(--ok);
+      }
+
+      .state-box.pending .icon { background: var(--warn-bg); color: var(--warn); }
+      .state-box.fail .icon { background: var(--err-bg); color: var(--err); }
+
+      .state-box h2 {
+        font-family: "Manrope", sans-serif;
+        font-size: 1.25rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+        color: var(--ink);
+      }
+
+      .state-box p {
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.6;
+        max-width: 40ch;
+        margin: 0 auto 16px;
+      }
+
+      .loading, .auth {
+        text-align: center;
+        padding: 40px 12px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .auth a {
+        color: var(--accent);
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .auth a:hover { text-decoration: underline; }
+
+      @media (max-width: 720px) {
+        .stats { grid-template-columns: 1fr; }
+        .layout { grid-template-columns: 1fr; }
+        .card { padding: 22px 16px 26px; }
+      }
     </style>
   </head>
-  <body style="background:#0b120e;min-height:100vh;">
-    <main class="pay-page">
-      <p><a href="/" style="color:inherit;opacity:0.8;">← Back to Farlands</a></p>
-      <section class="pay-card" id="pay-root">
+  <body>
+    <div class="wrap">
+      <a href="/" class="back">← Back to Farlands</a>
+
+      <section class="card" id="pay-root">
         <h1>Complete UPI payment</h1>
-        <p class="pay-muted">Scan the QR or pay the official UPI ID, then submit your transaction ID and an unedited screenshot. Status stays <strong>pending</strong> until an organizer verifies it.</p>
-        <div id="pay-message" class="pay-msg" hidden></div>
-        <div id="pay-loading" class="pay-muted">Loading payment portal…</div>
+        <p class="lede">
+          Scan the QR or pay the UPI ID below, then submit your transaction ID and screenshot.
+          Your payment will stay <strong>pending</strong> until an organizer verifies it.
+        </p>
+
+        <div id="pay-message" class="msg" hidden></div>
+        <div id="pay-loading" class="loading">Loading payment portal…</div>
+
         <div id="pay-body" hidden>
-          <div class="pay-grid">
-            <article><span>TEAM / REGISTRATION</span><strong id="pay-reg">—</strong></article>
-            <article><span>FEE</span><strong id="pay-amount">—</strong></article>
-            <article><span>STATUS</span><strong id="pay-status">—</strong></article>
+          <div class="stats">
+            <div class="stat">
+              <span>Team / Registration</span>
+              <strong id="pay-reg">—</strong>
+            </div>
+            <div class="stat">
+              <span>Fee amount</span>
+              <strong id="pay-amount">—</strong>
+            </div>
+            <div class="stat">
+              <span>Status</span>
+              <strong id="pay-status">—</strong>
+            </div>
           </div>
+
+          <!-- Verified by admin -->
           <div id="pay-verified" hidden>
-            <h2>✓ Payment verified</h2>
-            <p class="pay-muted">Your registration is confirmed.</p>
+            <div class="state-box">
+              <div class="icon">✓</div>
+              <h2>Payment verified</h2>
+              <p>Your registration is confirmed. You’re all set for Farlands.</p>
+            </div>
           </div>
+
+          <!-- Proof submitted — under verification -->
           <div id="pay-pending" hidden>
-            <h2>Under verification</h2>
-            <p class="pay-muted">Proof submitted. Do not pay again unless asked.</p>
-            <button type="button" class="pay-secondary" id="btn-view-proof">View submitted screenshot</button>
+            <div class="state-box pending">
+              <div class="icon">✓</div>
+              <h2>Payment success — under verification</h2>
+              <p>
+                Your proof was submitted successfully. An organizer will verify it shortly.
+                Please do not pay again unless asked to resubmit.
+              </p>
+              <button type="button" class="btn btn-ghost" id="btn-view-proof">View submitted screenshot</button>
+            </div>
           </div>
+
+          <!-- Rejected -->
+          <div id="pay-rejected" hidden>
+            <div class="state-box fail">
+              <div class="icon">!</div>
+              <h2>Resubmission required</h2>
+              <p id="pay-reject-reason">Your previous proof was rejected. Submit a clear, unedited screenshot below.</p>
+            </div>
+          </div>
+
+          <!-- Pay + submit form -->
           <div id="pay-collect">
-            <div class="pay-row">
-              <img id="pay-qr" class="pay-qr" src="/payment/upi_qr.jpeg" alt="UPI QR code" onerror="this.src='/payment/upi-qr.jpeg'" />
-              <div>
-                <span class="pay-muted">SCAN TO PAY</span>
-                <p>UPI ID</p>
-                <code class="upi" id="pay-upi">—</code>
-                <div class="pay-actions">
-                  <button type="button" class="pay-secondary" id="btn-upi-app">Open UPI app</button>
+            <div class="layout">
+              <div class="panel">
+                <p class="panel-title">1 · Pay</p>
+                <div class="qr-box">
+                  <img
+                    id="pay-qr"
+                    src="/payment/upi_qr.jpeg"
+                    alt="UPI QR code"
+                    onerror="this.src='/payment/upi-qr.jpeg'"
+                  />
+                  <div class="upi-line">
+                    <label>UPI ID</label>
+                    <div class="upi-value">
+                      <code id="pay-upi">—</code>
+                      <button type="button" class="icon-btn" id="btn-copy-upi" title="Copy UPI ID">Copy</button>
+                    </div>
+                  </div>
+                  <p class="hint">Pay the <strong>exact fee</strong> shown above, then submit your proof on the right.</p>
                 </div>
-                <p class="pay-muted" style="margin-top:10px;">Pay the exact fee. Opening the UPI app does not auto-verify payment.</p>
+              </div>
+
+              <div class="panel">
+                <p class="panel-title">2 · Submit proof</p>
+                <form id="pay-form">
+                  <div class="form-group">
+                    <label for="utr">UPI transaction ID / UTR</label>
+                    <input
+                      id="utr"
+                      name="utr"
+                      type="text"
+                      required
+                      minlength="6"
+                      maxlength="64"
+                      pattern="[A-Za-z0-9-]{6,64}"
+                      placeholder="e.g. 312345678901"
+                      autocomplete="off"
+                      spellcheck="false"
+                    />
+                    <p class="form-hint">From your UPI app transaction history (6–64 characters)</p>
+                  </div>
+                  <div class="form-group">
+                    <label for="screenshot">Payment screenshot</label>
+                    <input
+                      id="screenshot"
+                      name="screenshot"
+                      type="file"
+                      accept="image/png,image/jpeg,image/webp"
+                      required
+                    />
+                    <p class="form-hint">PNG, JPEG or WebP · max 5 MB · unedited preferred</p>
+                  </div>
+                  <button type="submit" class="btn btn-primary" id="btn-submit-proof" style="margin-top:6px">
+                    Submit payment proof
+                  </button>
+                </form>
               </div>
             </div>
-            <form class="pay-form" id="pay-form">
-              <h2>Submit payment proof</h2>
-              <label for="utr">UPI transaction ID / UTR</label>
-              <input id="utr" name="utr" type="text" required minlength="6" maxlength="64" pattern="[A-Za-z0-9-]{6,64}" placeholder="Enter UTR from your UPI app" autocomplete="off" />
-              <label for="screenshot">Payment screenshot <span class="pay-muted">PNG, JPEG, or WebP · up to 5 MB</span></label>
-              <input id="screenshot" name="screenshot" type="file" accept="image/png,image/jpeg,image/webp" required />
-              <div class="pay-actions">
-                <button type="submit" class="pay-btn" id="btn-submit-proof">Submit payment proof</button>
-              </div>
-            </form>
           </div>
         </div>
-        <div id="pay-auth" hidden>
-          <p class="pay-muted">You need an active team session to submit payment proof. Register first, or sign in with your Team ID.</p>
-          <p><a href="/#section-register">Go to registration</a></p>
+
+        <div id="pay-auth" class="auth" hidden>
+          <p>You need an active team session to submit payment proof.</p>
+          <p style="margin-top:10px"><a href="/#section-register">Go to registration →</a></p>
         </div>
       </section>
-    </main>
+    </div>
+
     <script type="module">
       const $ = (id) => document.getElementById(id);
-      const msg = (text, kind = '') => {
+
+      function msg(text, kind = '') {
         const el = $('pay-message');
         el.hidden = !text;
         el.textContent = text || '';
-        el.className = 'pay-msg' + (kind ? ' ' + kind : '');
-      };
+        el.className = 'msg' + (kind ? ' msg-' + kind : '');
+      }
 
       let data = null;
 
       function formatAmount(fee, currency) {
         try {
-          return new Intl.NumberFormat('en-IN', { style: 'currency', currency: currency || 'INR', maximumFractionDigits: 0 }).format((fee || 0) / 100);
+          return new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: currency || 'INR',
+            maximumFractionDigits: 0,
+          }).format((fee || 0) / 100);
         } catch {
           return `₹${((fee || 0) / 100).toFixed(0)}`;
         }
@@ -107,21 +536,63 @@
         if (!data) return;
         $('pay-loading').hidden = true;
         $('pay-body').hidden = false;
-        $('pay-reg').textContent = data.registration?.number || data.registration?.id || '—';
-        $('pay-amount').textContent = formatAmount(data.registration?.feeAmount, data.registration?.currency);
+
+        const regLabel =
+          data.registration?.number ||
+          data.registration?.registrationNumber ||
+          data.team?.teamId ||
+          data.registration?.id ||
+          '—';
+        $('pay-reg').textContent = regLabel;
+        $('pay-amount').textContent = formatAmount(
+          data.registration?.feeAmount,
+          data.registration?.currency
+        );
+
         const payment = data.payment;
         const paid = payment?.status === 'paid' || payment?.status === 'verified';
-        const pending = payment?.status === 'pending_verification' || payment?.status === 'pending';
-        $('pay-status').textContent = paid ? 'CONFIRMED' : pending ? 'UNDER VERIFICATION' : payment?.status === 'payment_failed' || payment?.status === 'rejected' ? 'RESUBMISSION REQUIRED' : 'PAYMENT PENDING';
+        const pending =
+          payment?.status === 'pending_verification' || payment?.status === 'pending';
+        const rejected =
+          payment?.status === 'payment_failed' || payment?.status === 'rejected';
+
+        const statusEl = $('pay-status');
+        if (paid) {
+          statusEl.textContent = 'CONFIRMED';
+          statusEl.className = 'status-ok';
+        } else if (pending) {
+          statusEl.textContent = 'UNDER VERIFICATION';
+          statusEl.className = 'status-pending';
+        } else if (rejected) {
+          statusEl.textContent = 'RESUBMIT REQUIRED';
+          statusEl.className = 'status-fail';
+        } else {
+          statusEl.textContent = 'PAYMENT PENDING';
+          statusEl.className = 'status-pending';
+        }
+
         $('pay-upi').textContent = data.paymentInstructions?.upiId || '—';
-        if (data.paymentInstructions?.qrPath) $('pay-qr').src = data.paymentInstructions.qrPath;
+        if (data.paymentInstructions?.qrPath) {
+          $('pay-qr').src = data.paymentInstructions.qrPath;
+        }
+
         $('pay-verified').hidden = !paid;
         $('pay-pending').hidden = !pending;
+        $('pay-rejected').hidden = !rejected;
+        // Show form only when not paid and not already pending
         $('pay-collect').hidden = !!(paid || pending);
+
+        if (rejected && payment?.rejectionReason) {
+          $('pay-reject-reason').textContent =
+            'Reason: ' + payment.rejectionReason + '. Please submit a clear screenshot.';
+        }
       }
 
       async function load() {
-        const response = await fetch('/api/payments/status', { credentials: 'include', cache: 'no-store' });
+        const response = await fetch('/api/payments/status', {
+          credentials: 'include',
+          cache: 'no-store',
+        });
         if (response.status === 401) {
           $('pay-loading').hidden = true;
           $('pay-auth').hidden = false;
@@ -129,7 +600,7 @@
         }
         const payload = await response.json().catch(() => null);
         if (!response.ok) {
-          msg((payload && payload.error) || 'Could not load payment information.', 'pay-err');
+          msg((payload && payload.error) || 'Could not load payment information.', 'err');
           $('pay-loading').hidden = true;
           return;
         }
@@ -137,23 +608,27 @@
         render();
       }
 
-      $('btn-upi-app')?.addEventListener('click', () => {
-        if (!data?.paymentInstructions?.upiId) return;
-        const uri = new URL('upi://pay');
-        uri.searchParams.set('pa', data.paymentInstructions.upiId);
-        uri.searchParams.set('pn', 'Farlands Hackathon');
-        uri.searchParams.set('am', ((data.registration?.feeAmount || 0) / 100).toFixed(2));
-        uri.searchParams.set('cu', data.registration?.currency || 'INR');
-        uri.searchParams.set('tn', data.registration?.number || 'Farlands');
-        window.location.assign(uri.toString());
+      $('btn-copy-upi')?.addEventListener('click', async () => {
+        const upi = data?.paymentInstructions?.upiId;
+        if (!upi) return;
+        try {
+          await navigator.clipboard.writeText(upi);
+          msg('UPI ID copied.', 'ok');
+          setTimeout(() => msg(null), 2500);
+        } catch {
+          msg('Could not copy. Select the UPI ID manually.', 'err');
+        }
       });
 
       $('btn-view-proof')?.addEventListener('click', async () => {
         if (!data?.payment?.id) return;
-        const response = await fetch(`/api/payments/proof/${data.payment.id}`, { credentials: 'include', cache: 'no-store' });
+        const response = await fetch(`/api/payments/proof/${data.payment.id}`, {
+          credentials: 'include',
+          cache: 'no-store',
+        });
         const payload = await response.json().catch(() => null);
         if (!response.ok || !payload?.url) {
-          msg((payload && payload.error) || 'Screenshot unavailable.', 'pay-err');
+          msg((payload && payload.error) || 'Screenshot unavailable.', 'err');
           return;
         }
         window.open(payload.url, '_blank', 'noopener,noreferrer');
@@ -163,31 +638,46 @@
         event.preventDefault();
         const utr = $('utr').value.trim().toUpperCase();
         const file = $('screenshot').files?.[0];
-        if (!file) { msg('Select your payment screenshot first.', 'pay-err'); return; }
+        if (!file) {
+          msg('Select your payment screenshot first.', 'err');
+          return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+          msg('Screenshot must be 5 MB or smaller.', 'err');
+          return;
+        }
         const btn = $('btn-submit-proof');
         btn.disabled = true;
+        btn.textContent = 'Submitting…';
         msg(null);
         try {
           const form = new FormData();
           form.set('utr', utr);
           form.set('screenshot', file);
-          const response = await fetch('/api/payments/submit-proof', { method: 'POST', body: form, credentials: 'include', cache: 'no-store' });
+          const response = await fetch('/api/payments/submit-proof', {
+            method: 'POST',
+            body: form,
+            credentials: 'include',
+            cache: 'no-store',
+          });
           const payload = await response.json().catch(() => null);
-          if (!response.ok) throw new Error((payload && payload.error) || 'Proof could not be submitted.');
-          msg('Payment proof submitted. The organizer will verify it shortly.', 'pay-ok');
-          $('utr').value = '';
-          $('screenshot').value = '';
+          if (!response.ok) {
+            throw new Error((payload && payload.error) || 'Proof could not be submitted.');
+          }
+          // Show success immediately, then refresh state
+          msg(null);
           await load();
         } catch (error) {
-          msg(error instanceof Error ? error.message : 'Proof could not be submitted.', 'pay-err');
+          msg(error instanceof Error ? error.message : 'Proof could not be submitted.', 'err');
         } finally {
           btn.disabled = false;
+          btn.textContent = 'Submit payment proof';
         }
       });
 
       load().catch(() => {
         $('pay-loading').hidden = true;
-        msg('Payment portal unavailable. Ensure the API server is running.', 'pay-err');
+        msg('Payment portal unavailable. Ensure the API server is running.', 'err');
       });
     </script>
   </body>
