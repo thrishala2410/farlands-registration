@@ -223,6 +223,26 @@ html { scroll-behavior: smooth; }
   text-align: center;
 }
 
+.hero-logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 20px;
+}
+
+.hero-logo {
+  display: block;
+  width: min(360px, 78vw);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 32px rgba(41, 72, 62, 0.2));
+}
+
+@media (max-width: 700px) {
+  .hero-logo {
+    width: min(260px, 82vw);
+  }
+}
+
 .hero-title {
   font-family: var(--fl-font-head);
   font-size: clamp(52px, 7.5vw, 112px);
@@ -692,6 +712,18 @@ html { scroll-behavior: smooth; }
 #section-register { background: var(--fl-surface-2); }
 
 .reg-header { max-width: 1160px; margin: 0 auto 48px; }
+
+.reg-logo-wrap {
+  margin: 0 0 28px;
+}
+
+.reg-logo {
+  display: block;
+  width: min(420px, 100%);
+  height: auto;
+  image-rendering: auto;
+  filter: drop-shadow(0 8px 28px rgba(41, 72, 62, 0.18));
+}
 
 .reg-progress {
   font-size: 10px;
@@ -1476,3 +1508,30 @@ html { scroll-behavior: smooth; }
   padding-right: 16px;
 }
 
+
+
+/* Farlands logo in sticky hackathon nav */
+.nav-brand.nav-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.nav-brand-img {
+  display: block;
+  height: 36px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+}
+.nav-brand-logo .nav-brand-year {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--fl-ink-muted);
+  white-space: nowrap;
+}
+@media (max-width: 700px) {
+  .nav-brand-img { height: 30px; max-width: 120px; }
+  .nav-brand-logo .nav-brand-year { display: none; }
+}

@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#d5e5e4" />
     <meta name="description" content="Farlands Hackathon 2026 — a 48-hour innovation sprint. From Vishwakarma's ancient architecture to the infinite glitched horizons of Minecraft. Build, code, and conquer." />
     <title>Farlands Hackathon 2026 — Beyond the Farlands</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%233c6250' d='M16 2 30 9v14L16 30 2 23V9z'/%3E%3Cpath fill='%239cbb8a' d='m16 2 14 7-14 7L2 9z'/%3E%3C/svg%3E" />
+    <link rel="icon" type="image/jpeg" href="/farlands-logo.jpeg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -17,9 +17,9 @@
          HACKATHON NAV — becomes visible when scrolled to content
     ═══════════════════════════════════════════════════════════ -->
     <nav id="hackathon-nav" aria-label="Farlands Hackathon navigation">
-      <a class="nav-brand" href="#section-hero" aria-label="Farlands Hackathon 2026">
-        <svg viewBox="0 0 28 30" aria-hidden="true"><path d="m14 1 12 7v14l-12 7L2 22V8zM2 8l12 7 12-7M14 15v14"/></svg>
-        farlands<span class="nav-brand-year">HACKATHON 2026</span>
+      <a class="nav-brand nav-brand-logo" href="#section-hero" aria-label="Farlands Hackathon 2026">
+        <img src="/farlands-logo.jpeg" alt="Farlands" class="nav-brand-img" />
+        <span class="nav-brand-year">HACKATHON 2026</span>
       </a>
       <ul class="nav-links" role="list">
         <li><a href="#section-about">About</a></li>
@@ -45,7 +45,7 @@
       <div class="stage">
         <div class="sky-glow" aria-hidden="true"></div>
         <header class="header">
-          <a class="wordmark" href="#" aria-label="Farlands, return to the sky"><svg viewBox="0 0 28 30" aria-hidden="true"><path d="m14 1 12 7v14l-12 7L2 22V8zM2 8l12 7 12-7M14 15v14"/></svg>farlands<span>®</span></a>
+          <a class="wordmark wordmark-logo" href="#" aria-label="Farlands, return to the sky"><img src="/farlands-logo.jpeg" alt="Farlands" class="wordmark-img" /></a>
           <span class="header-note">A LITTLE WORLD OF WONDER</span>
           <button class="soundless" id="return-top" aria-label="Restart the journey">Back to the sky <span aria-hidden="true">↗</span></button>
         </header>
@@ -57,7 +57,7 @@
         <div id="scene" role="img" aria-label="Steve falling through a pastel sky onto a rotating miniature voxel world"></div>
         <div class="loading" id="loading" role="status"><span></span>Finding our little world…</div>
         <div class="error" id="error" hidden role="alert"><h2>The sky is taking a moment.</h2><p></p><button id="retry">Try again ↗</button></div>
-        <div class="chapter" id="chapter" aria-hidden="true"><span id="chapter-number">01 / 06</span><h2 id="chapter-title">A softer landing.</h2><p id="chapter-description">A little earth. An entirely new outlook.</p></div>
+        <div class="chapter" id="chapter" aria-hidden="true"><span id="chapter-number">01 / 06</span><h2 id="chapter-title">Touchdown in Farlands.</h2><p id="chapter-description">Your squad has landed. The 48-hour sprint begins here.</p></div>
         <footer class="footer">
           <div class="edition">AN INTERACTIVE EXPLORATION<span>SMALL WORLD. ENDLESS PERSPECTIVES.</span></div>
           <div class="scroll-cue"><span class="scroll-line"></span><span id="scroll-label">SCROLL TO TAKE THE LEAP</span></div>
@@ -75,10 +75,9 @@
       <!-- ── HERO INFO ───────────────────────────────────────── -->
       <section id="section-hero" class="fl-section" aria-label="Hackathon overview">
         <div class="fl-section-inner" style="text-align:center;">
-          <div class="voxel-pill-badge fl-animate">
-            <span class="voxel-cube-dot"></span> FARLANDS HACKATHON 2026 // SEED #12550821
+          <div class="hero-logo-wrap fl-animate">
+            <img src="/farlands-logo.jpeg" alt="Farlands" class="hero-logo" width="360" height="120" />
           </div>
-          <h1 class="hero-title fl-animate">FARLANDS</h1>
           <p class="hero-year fl-animate">HACKATHON 2026</p>
           <p class="hero-tagline fl-animate">BEYOND THE FARLANDS.</p>
           <p class="hero-description fl-animate">
