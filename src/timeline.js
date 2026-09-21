@@ -14,12 +14,12 @@ export const CONFIG = Object.freeze({
   diveStart: 0.08, divePeak: 0.22, diveEnd: 0.32,
 });
 export const BIOMES = [
-  ['Touchdown in Farlands.', 'Your squad has landed. The 48-hour sprint begins here.'],
+ ['14 · 15 · 16', 'Mark your calendar — Farlands runs across three full days.'],
   ['₹60K+ prize pool.', 'Present your build and compete for the Farlands loot.'],
-  ['Ideas take shape.', 'Prototype fast. Validate faster. Leave polish for later.'],
-  ['Build through the night.', 'Mentors, coffee, and commits until the demo.'],
-  ['Cambridge Institute of Technology.', 'Venue for Farlands — build, ship, and present on campus.'],
-  ['Organised by Adastra CIT.', 'Farlands Hackathon — powered by Adastra at Cambridge Institute of Technology.'],
+  ['Certificates for all.', 'Every participant receives a certificate of participation.'],
+  ['Open to BTech / BE.', 'All BTech and BE students are welcome to join the sprint.'],
+  ['Problem statements drop early.', 'Themes go live 3 days before the hackathon begins.'],
+  ['Touchdown in Farlands.', 'Your squad has landed. The 48-hour sprint begins here.'],
 ];
 export const clamp = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
 export const range = (v, a, b) => clamp((v - a) / (b - a));
