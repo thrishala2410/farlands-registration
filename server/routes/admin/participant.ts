@@ -98,3 +98,37 @@ export async function PATCH(request: Request, { params }: Context) {
     return apiError(error);
   }
 }
+
+export async function DELETE(request: Request, { params }: Context) {
+  try {
+    const actor = await adminOnly(request);
+    const id = idSchema.parse((await params).id);
+    const admin = getAdminClient();
+
+    const { data: participant, error: findErr } = await admin
+      .from("participants")
+      .select("id, name, email, team_id, participant_id")
+      .eq("id", id)
+      .maybeSingle();
+    if (findErr || !participant) throw new HttpError(404, "Participant not found");
+
+    const { error: delErr } = await admin.from("participants").delete().eq("id", id);
+    if (delErr) throw delErr;
+
+    await writeAudit({
+      action: "admin.participant_deleted",
+      actorRole: "admin",
+      actorId: actor.user.id,
+      metadata: {
+        name: participant.name,
+        email: participant.email,
+        teamId: participant.team_id,
+        participantId: participant.participant_id,
+      },
+    });
+
+    return adminJson({ ok: true, deleted: id });
+  } catch (error) {
+    return apiError(error);
+  }
+}

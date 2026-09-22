@@ -74,9 +74,9 @@ const routes: RouteDef[] = [
 
   { pattern: ["api", "admin", "stats"], handlers: { GET: adminStatsRoute.GET }, tier: "admin", guard: "admin" },
   { pattern: ["api", "admin", "teams"], handlers: { GET: adminTeamsRoute.GET }, tier: "admin", guard: "admin" },
-  { pattern: ["api", "admin", "teams", ":id"], handlers: { GET: adminTeamRoute.GET, PATCH: adminTeamRoute.PATCH }, tier: "admin", guard: "admin" },
+  { pattern: ["api", "admin", "teams", ":id"], handlers: { GET: adminTeamRoute.GET, PATCH: adminTeamRoute.PATCH, DELETE: adminTeamRoute.DELETE }, tier: "admin", guard: "admin" },
   { pattern: ["api", "admin", "participants"], handlers: { GET: adminParticipantsRoute.GET }, tier: "admin", guard: "admin" },
-  { pattern: ["api", "admin", "participants", ":id"], handlers: { GET: adminParticipantRoute.GET, PATCH: adminParticipantRoute.PATCH }, tier: "admin", guard: "admin" },
+  { pattern: ["api", "admin", "participants", ":id"], handlers: { GET: adminParticipantRoute.GET, PATCH: adminParticipantRoute.PATCH, DELETE: adminParticipantRoute.DELETE }, tier: "admin", guard: "admin" },
   { pattern: ["api", "admin", "registrations"], handlers: { GET: adminRegistrationsRoute.GET }, tier: "admin", guard: "admin" },
   { pattern: ["api", "admin", "payments"], handlers: { GET: adminPaymentsRoute.GET }, tier: "admin", guard: "admin" },
   { pattern: ["api", "admin", "payments", ":id"], handlers: { GET: adminPaymentRoute.GET }, tier: "admin", guard: "admin" },

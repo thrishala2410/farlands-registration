@@ -136,9 +136,9 @@ function buildTeammateHTML(index) {
             placeholder="your@email.com" ${isLeader ? 'required' : ''} autocomplete="email">
         </div>
         <div class="field-group">
-          <label class="field-label" for="tm-phone-${index}">PHONE (OPTIONAL)</label>
+          <label class="field-label" for="tm-phone-${index}">PHONE *</label>
           <input class="field-input" id="tm-phone-${index}" name="tm-phone-${index}" type="tel"
-            placeholder="+91 00000 00000" autocomplete="tel">
+            placeholder="+91 00000 00000" required autocomplete="tel">
         </div>
       </div>
     </div>
@@ -228,6 +228,17 @@ function initRegistration() {
           valid = false;
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
           emailInp.classList.add('field-error'); markError(emailInp, 'Enter a valid email address.');
+          valid = false;
+        }
+      }
+      const phoneInp = document.getElementById(`tm-phone-${i}`);
+      if (phoneInp) {
+        const phone = phoneInp.value.trim().replace(/[\s-]/g, '');
+        if (!phone) {
+          phoneInp.classList.add('field-error'); markError(phoneInp, 'Phone number is required.');
+          valid = false;
+        } else if (!/^\+?[0-9]{10,15}$/.test(phone)) {
+          phoneInp.classList.add('field-error'); markError(phoneInp, 'Enter a valid phone (10–15 digits).');
           valid = false;
         }
       }

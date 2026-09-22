@@ -109,3 +109,44 @@ export async function PATCH(request: Request, { params }: Context) {
     return apiError(error);
   }
 }
+export async function DELETE(request: Request, { params }: Context) {
+  try {
+    const actor = await adminOnly(request);
+    const id = idSchema.parse((await params).id);
+    const admin = getAdminClient();
+
+    const { data: team, error: teamErr } = await admin
+      .from("teams")
+      .select("id, team_id, team_name")
+      .eq("id", id)
+      .maybeSingle();
+    if (teamErr || !team) throw new HttpError(404, "Team not found");
+
+    // Cascade: payment proofs → registrations → participants → team
+    try {
+      await admin.from("payment_proofs").delete().eq("team_id", id);
+    } catch {
+      /* table may be named payments in some envs */
+      try {
+        await admin.from("payments").delete().eq("team_id", id);
+      } catch {
+        /* ignore */
+      }
+    }
+    await admin.from("registrations").delete().eq("team_id", id);
+    await admin.from("participants").delete().eq("team_id", id);
+    const { error: delErr } = await admin.from("teams").delete().eq("id", id);
+    if (delErr) throw delErr;
+
+    await writeAudit({
+      action: "admin.team_deleted",
+      actorRole: "admin",
+      actorId: actor.user.id,
+      metadata: { teamId: id, publicTeamId: (team as { team_id?: string }).team_id, teamName: team.team_name },
+    });
+
+    return adminJson({ ok: true, deleted: id });
+  } catch (error) {
+    return apiError(error);
+  }
+}

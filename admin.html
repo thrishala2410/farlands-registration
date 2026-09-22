@@ -6,24 +6,24 @@
     <meta name="theme-color" content="#d5e5e4" />
     <meta name="robots" content="noindex,nofollow" />
     <title>Admin — Farlands Hackathon 2026</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%233c6250' d='M16 2 30 9v14L16 30 2 23V9z'/%3E%3Cpath fill='%239cbb8a' d='m16 2 14 7-14 7L2 9z'/%3E%3C/svg%3E" />
+    <link rel="icon" type="image/png" href="/farlands-logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body class="admin-body">
     <div id="admin-app">
-      <!-- Login view -->
+      <!-- Login only — no data visible until authenticated -->
       <section id="admin-login-view" class="admin-shell" aria-labelledby="admin-login-title">
         <div class="admin-card">
           <div class="admin-brand">
-            <svg viewBox="0 0 28 30" aria-hidden="true"><path d="m14 1 12 7v14l-12 7L2 22V8zM2 8l12 7 12-7M14 15v14"/></svg>
+            <img src="/farlands-logo.png" alt="" class="admin-logo" width="120" height="40" />
             <div>
               <p class="admin-eyebrow">Farlands · Organizer</p>
               <h1 id="admin-login-title">Admin sign in</h1>
             </div>
           </div>
-          <p class="admin-lede">Use the organizer account provisioned for this event. Sessions use HttpOnly cookies.</p>
+          <p class="admin-lede">Sign in with the organizer email and password. Registration details stay hidden until you authenticate.</p>
           <form id="admin-login-form" class="admin-form" novalidate>
             <label class="admin-field">
               <span>Email</span>
@@ -40,83 +40,112 @@
         </div>
       </section>
 
-      <!-- Dashboard view -->
+      <!-- Dashboard — always starts hidden -->
       <section id="admin-dash-view" class="admin-dash" hidden>
         <header class="admin-topbar">
           <div class="admin-brand compact">
-            <svg viewBox="0 0 28 30" aria-hidden="true"><path d="m14 1 12 7v14l-12 7L2 22V8zM2 8l12 7 12-7M14 15v14"/></svg>
+            <img src="/farlands-logo.png" alt="" class="admin-logo-sm" />
             <span>Farlands Admin</span>
           </div>
-          <nav class="admin-tabs" aria-label="Admin sections">
-            <button type="button" data-tab="stats" class="is-active">Overview</button>
-            <button type="button" data-tab="teams">Teams</button>
-            <button type="button" data-tab="participants">Participants</button>
-            <button type="button" data-tab="payments">Payments</button>
-          </nav>
           <button type="button" class="admin-btn-ghost" id="admin-logout-btn">Sign out</button>
         </header>
 
         <main class="admin-main">
           <div id="admin-banner" class="admin-banner" hidden role="status"></div>
 
-          <div id="panel-stats" class="admin-panel">
-            <h2>Overview</h2>
-            <div class="admin-stat-grid" id="stats-grid">
-              <div class="admin-stat"><span class="label">Loading…</span><strong>—</strong></div>
-            </div>
+          <div class="admin-stat-grid" id="stats-grid">
+            <div class="admin-stat"><span class="label">Loading…</span><strong>—</strong></div>
           </div>
 
-          <div id="panel-teams" class="admin-panel" hidden>
+          <div class="admin-panel review-panel">
             <div class="admin-panel-head">
-              <h2>Teams</h2>
-              <input type="search" id="teams-search" placeholder="Search team name or ID…" class="admin-search" />
+              <div>
+                <h2>Payment approval</h2>
+                <p class="admin-sub">Approve or reject submitted payment proofs. Status updates immediately.</p>
+              </div>
+              <div class="admin-toolbar">
+                <select id="review-filter" class="admin-search">
+                  <option value="pending">Pending only</option>
+                  <option value="all">All submissions</option>
+                  <option value="verified">Verified only</option>
+                  <option value="rejected">Rejected only</option>
+                </select>
+                <button type="button" class="admin-btn-sm" id="review-refresh">Refresh</button>
+              </div>
             </div>
             <div class="admin-table-wrap">
-              <table class="admin-table" id="teams-table">
+              <table class="admin-table" id="review-table">
                 <thead>
-                  <tr><th>Team ID</th><th>Name</th><th>Status</th><th>Created</th></tr>
+                  <tr>
+                    <th>Team name</th>
+                    <th>Status</th>
+                    <th>Approve / Reject</th>
+                  </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody id="review-tbody">
+                  <tr><td colspan="3" class="muted">Loading…</td></tr>
+                </tbody>
               </table>
             </div>
+            <div class="master-cards" id="review-cards"></div>
           </div>
 
-          <div id="panel-participants" class="admin-panel" hidden>
+          <div class="admin-panel master-panel">
             <div class="admin-panel-head">
-              <h2>Participants</h2>
-              <input type="search" id="participants-search" placeholder="Search name or email…" class="admin-search" />
+              <div>
+                <h2>All registrations</h2>
+                <p class="admin-sub">Team, members (with phone), reg ID &amp; payment status — one table</p>
+              </div>
+              <div class="admin-toolbar">
+                <input type="search" id="master-search" placeholder="Search team, email, reg ID…" class="admin-search" />
+                <select id="master-status" class="admin-search">
+                  <option value="">All payment statuses</option>
+                  <option value="no_payment">No proof yet</option>
+                  <option value="pending">Pending verification</option>
+                  <option value="verified">Verified / paid</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+                <button type="button" class="admin-btn-sm" id="master-refresh">Refresh</button>
+                <button type="button" class="admin-btn-primary admin-btn-sm" id="master-export">Export CSV + Excel</button>
+              </div>
             </div>
-            <div class="admin-table-wrap">
-              <table class="admin-table" id="participants-table">
-                <thead>
-                  <tr><th>Name</th><th>Email</th><th>Participant ID</th><th>Status</th></tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
 
-          <div id="panel-payments" class="admin-panel" hidden>
-            <div class="admin-panel-head">
-              <h2>Payment proofs</h2>
-              <select id="payments-status" class="admin-search">
-                <option value="">All statuses</option>
-                <option value="pending_verification">Pending verification</option>
-                <option value="paid">Paid</option>
-                <option value="payment_failed">Rejected</option>
-              </select>
-            </div>
             <div class="admin-table-wrap">
-              <table class="admin-table" id="payments-table">
+              <table class="admin-table master-table" id="master-table">
                 <thead>
-                  <tr><th>UTR</th><th>Amount</th><th>Status</th><th>Submitted</th><th>Actions</th></tr>
+                  <tr>
+                    <th>Reg ID</th>
+                    <th>Team</th>
+                    <th>Participants (name · email · phone)</th>
+                    <th>Payment status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                  </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody id="master-tbody">
+                  <tr><td colspan="7" class="muted">Sign in required</td></tr>
+                </tbody>
               </table>
             </div>
+
+            <!-- Mobile card list -->
+            <div class="master-cards" id="master-cards" aria-live="polite"></div>
           </div>
         </main>
       </section>
+
+      <!-- Modal -->
+      <div id="admin-modal" class="admin-modal" hidden>
+        <div class="admin-modal-backdrop" data-close-modal></div>
+        <div class="admin-modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+          <header class="admin-modal-head">
+            <h2 id="modal-title">Details</h2>
+            <button type="button" class="admin-icon-btn" data-close-modal aria-label="Close">×</button>
+          </header>
+          <div id="modal-body" class="admin-modal-body"></div>
+          <footer id="modal-foot" class="admin-modal-foot"></footer>
+        </div>
+      </div>
     </div>
     <script type="module" src="/src/admin.js"></script>
   </body>

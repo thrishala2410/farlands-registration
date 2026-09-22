@@ -5,7 +5,7 @@ const normalizedEmail = z.string().trim().toLowerCase().email().max(254);
 export const participantInputSchema = z.object({
   name: z.string().trim().min(2).max(100),
   email: normalizedEmail,
-  phone: z.string().trim().regex(/^\+?[0-9]{10,15}$/).optional().or(z.literal("")),
+  phone: z.string().trim().regex(/^\+?[0-9]{10,15}$/, "Enter a valid phone number (10–15 digits)."),
   college: z.string().trim().min(2).max(150).optional().or(z.literal("")),
   course: z.string().trim().min(2).max(100).optional().or(z.literal("")),
   year: z.string().trim().min(1).max(20).optional().or(z.literal("")),
@@ -82,7 +82,7 @@ export const teamUpdateSchema = z.object({
 
 export const participantUpdateSchema = z.object({
   name: z.string().trim().min(2).max(100).optional(),
-  phone: z.string().trim().regex(/^\+?[0-9]{10,15}$/).optional().or(z.literal("")),
+  phone: z.string().trim().regex(/^\+?[0-9]{10,15}$/, "Enter a valid phone number (10–15 digits)."),
   college: z.string().trim().min(2).max(150).optional().or(z.literal("")),
   course: z.string().trim().min(2).max(100).optional().or(z.literal("")),
   year: z.string().trim().min(1).max(20).optional().or(z.literal("")),

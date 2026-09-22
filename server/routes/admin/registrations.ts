@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     let query = admin
       .from("registrations")
       .select(
-        "id, registration_number, status, fee_amount, currency, confirmed_at, created_at, updated_at, teams(id, team_id, team_name, status, participants(id, participant_id, name, email))",
+        "id, registration_number, status, fee_amount, currency, confirmed_at, created_at, updated_at, teams(id, team_id, team_name, status, participants(id, participant_id, name, email, phone))",
         { count: "exact" }
       )
       .order("created_at", { ascending: false })
