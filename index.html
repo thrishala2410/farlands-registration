@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#d5e5e4" />
     <meta name="description" content="Farlands Hackathon 2026 — a 48-hour innovation sprint. From Vishwakarma's ancient architecture to the infinite glitched horizons of Minecraft. Build, code, and conquer." />
     <title>Farlands Hackathon 2026 — Beyond the Farlands</title>
-    <link rel="icon" type="image/jpeg" href="/farlands-logo.jpeg" />
+    <link rel="icon" type="image/png" href="/farlands-logo.jpeg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -50,6 +50,18 @@
           <button class="soundless" id="return-top" aria-label="Restart the journey">Back to the sky <span aria-hidden="true">↗</span></button>
         </header>
         <div class="intro" id="intro">
+          <div class="hero-countdown fl-animate" aria-label="Countdown to Farlands">
+            <p class="hero-countdown-label">HACKATHON STARTS IN</p>
+            <div class="hero-countdown-units">
+              <div class="hero-cd-unit"><span class="hero-cd-value" id="hero-cd-days">--</span><span class="hero-cd-sub">Days</span></div>
+              <span class="hero-cd-sep" aria-hidden="true">:</span>
+              <div class="hero-cd-unit"><span class="hero-cd-value" id="hero-cd-hours">--</span><span class="hero-cd-sub">Hours</span></div>
+              <span class="hero-cd-sep" aria-hidden="true">:</span>
+              <div class="hero-cd-unit"><span class="hero-cd-value" id="hero-cd-mins">--</span><span class="hero-cd-sub">Mins</span></div>
+              <span class="hero-cd-sep" aria-hidden="true">:</span>
+              <div class="hero-cd-unit"><span class="hero-cd-value" id="hero-cd-secs">--</span><span class="hero-cd-sub">Secs</span></div>
+            </div>
+          </div>
           <p class="eyebrow">SOMEWHERE ABOVE THE ORDINARY</p>
           <h1>A different<br /><em>perspective.</em></h1>
           <p class="intro-description">Sometimes, all it takes is a little leap.</p>
@@ -59,7 +71,6 @@
         <div class="error" id="error" hidden role="alert"><h2>The sky is taking a moment.</h2><p></p><button id="retry">Try again ↗</button></div>
         <div class="chapter" id="chapter" aria-hidden="true"><span id="chapter-number">01 / 06</span><h2 id="chapter-title">Touchdown in Farlands.</h2><p id="chapter-description">Your squad has landed. The 48-hour sprint begins here.</p></div>
         <footer class="footer">
-        
           <div class="scroll-cue"><span class="scroll-line"></span><span id="scroll-label">SCROLL TO TAKE THE LEAP</span></div>
           <div class="progress" aria-label="Journey progress"><span id="progress-label">00</span><span class="progress-track"><i id="progress-bar"></i></span><span>100</span></div>
         </footer>
@@ -169,17 +180,19 @@
                 <span class="faq-icon" aria-hidden="true">+</span>
               </summary>
               <p class="faq-answer">
-                Farlands Hackathon is open to all BTech / BE students. Form a squad and register to join the sprint.
+                Farlands Hackathon is open to students, professionals, and independent creators passionate about
+                technology and innovation. Whether you're a developer, designer, or product thinker — all skill levels
+                are welcome. Eligibility details will be confirmed by the organizers closer to the event.
               </p>
             </details>
             <details class="faq-item" role="listitem">
               <summary>
-                <span class="faq-q-text">What is the team size limit?</span>
+                <span class="faq-q-text">What is the squad/team size limit?</span>
                 <span class="faq-icon" aria-hidden="true">+</span>
               </summary>
               <p class="faq-answer">
-                Teams can consist of 2 to 4 members. Solo participation is allowed. We encourage squads of 2–4 for
-                a well-balanced team across design, technical engineering, and presentation.
+                Teams must have 2 to 4 members. The first member is the team lead; the others are team members.
+                Solo registration is not allowed.
               </p>
             </details>
             <details class="faq-item" role="listitem">
@@ -188,19 +201,19 @@
                 <span class="faq-icon" aria-hidden="true">+</span>
               </summary>
               <p class="faq-answer">
-                Yes. The registration fee is ₹1,200 per team, payable via UPI after you register.
+                Registration fee details will be announced by the organizers. Please check back closer to the event
+                date or contact the Farlands team for the latest information.
               </p>
             </details>
             <details class="faq-item" role="listitem">
               <summary>
-                <span class="faq-q-text">How does the farlands work?</span>
+                <span class="faq-q-text">How does the transition from Vishwakarma work?</span>
                 <span class="faq-icon" aria-hidden="true">+</span>
               </summary>
               <p class="faq-answer">
-              Farlands is a 48-hour hackathon held on 14th,15th and 16th of October 2026 
-              that gives participants a platform to turn their ideas and creativity into real-world
-              solutions. Bring your team, build something meaningful,
-              experiment with new technologies, and bring your imagination to life.
+                Farlands Hackathon 2026 builds on the legacy of Vishwakarma, drawing inspiration from its
+                architectural precision and creative spirit. Returning participants from Vishwakarma will receive
+                priority registration and special recognition during the event.
               </p>
             </details>
           </div>
@@ -238,7 +251,7 @@
             <button class="btn-submit block-button-primary" type="submit" id="btn-submit-reg">
               Register Squad Now →
             </button>
-            <span class="reg-count" id="reg-count" aria-live="polite">2 of 4 Slots Filled</span>
+            <span class="reg-count" id="reg-count" aria-live="polite">2 of 4 slots filled</span>
           </div>
         </form>
 

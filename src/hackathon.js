@@ -1,3 +1,36 @@
+
+function initHeroCountdown() {
+  const days = document.getElementById('hero-cd-days');
+  const hours = document.getElementById('hero-cd-hours');
+  const mins = document.getElementById('hero-cd-mins');
+  const secs = document.getElementById('hero-cd-secs');
+  if (!days || !hours || !mins || !secs) return;
+
+  // 14 October 2026, 09:00 IST
+  const TARGET = new Date('2026-10-14T09:00:00+05:30');
+  const pad = (n) => String(Math.max(0, n)).padStart(2, '0');
+
+  function tick() {
+    const diff = TARGET.getTime() - Date.now();
+    if (diff <= 0) {
+      days.textContent = '00';
+      hours.textContent = '00';
+      mins.textContent = '00';
+      secs.textContent = '00';
+      const label = document.querySelector('.hero-countdown-label');
+      if (label) label.textContent = 'HACKATHON IS LIVE';
+      return;
+    }
+    const total = Math.floor(diff / 1000);
+    days.textContent = pad(Math.floor(total / 86400));
+    hours.textContent = pad(Math.floor((total % 86400) / 3600));
+    mins.textContent = pad(Math.floor((total % 3600) / 60));
+    secs.textContent = pad(total % 60);
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
 /**
  * Farlands Hackathon 2026 — Interactive JS
  * Covers: Countdown, FAQ accordion, Registration form, Nav state, Scroll animations.
@@ -116,7 +149,7 @@ const MAX_TEAMMATES = 4;
 
 function buildTeammateHTML(index) {
   const isLeader = index === 0;
-  const label = isLeader ? 'TEAM LEADER' : `TEAMMATE ${index + 1}`;
+  const label = isLeader ? 'TEAM LEADER' : `MEMBER ${index + 1}`;
   const canRemove = !isLeader;
   return `
     <div class="teammate-section fl-animate visible" id="teammate-${index}" data-index="${index}">
@@ -155,10 +188,10 @@ function initRegistration() {
 
   if (!formEl || !teammatesContainer) return;
 
-  let count = 1;
+  let count = 2;
 
   function updateCount() {
-    if (countEl) countEl.textContent = `${count} of ${MAX_TEAMMATES} Teammate${count !== 1 ? 's' : ''}`;
+    if (countEl) countEl.textContent = `${count} of ${MAX_TEAMMATES} members`;
     if (btnAdd) btnAdd.disabled = count >= MAX_TEAMMATES;
   }
 
@@ -172,7 +205,7 @@ function initRegistration() {
       btn.addEventListener('click', () => {
         const idx = parseInt(btn.dataset.remove, 10);
         // Shift: remove this index, renumber
-        count = Math.max(1, count - 1);
+        count = Math.max(2, count - 1);
         rebuildTeammates();
         updateCount();
       });
@@ -211,6 +244,11 @@ function initRegistration() {
       const inp = document.getElementById('team-name');
       if (inp) { inp.classList.add('field-error'); markError(inp, 'Team name is required.'); }
       valid = false;
+    }
+
+    if (count < 2) {
+      valid = false;
+      alert('Teams need at least 2 members: 1 team lead + at least 1 member.');
     }
 
     // Validate every teammate slot (index 0 is the team leader)
@@ -347,5 +385,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initCountdown();
   initNav();
   initScrollAnimations();
+  initHeroCountdown();
   initRegistration();
 });

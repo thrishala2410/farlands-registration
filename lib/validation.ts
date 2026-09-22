@@ -21,10 +21,10 @@ const legacyRegistrationShape = z.object({
   members: z.array(participantInputSchema).min(0).max(3),
 });
 
-// New static frontend payload: 1 to 4 teammates, the first listed is the team leader.
+// Frontend payload: 2 to 4 teammates, the first listed is the team leader.
 export const frontendRegistrationSchema = z.object({
   teamName: teamNameSchema,
-  teammates: z.array(participantInputSchema).min(1).max(4),
+  teammates: z.array(participantInputSchema).min(2).max(4),
   submittedAt: z.string().optional().or(z.literal("")),
 });
 

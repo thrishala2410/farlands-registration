@@ -22,3 +22,63 @@
     max-width: min(160px, 48vw);
   }
 }
+
+
+/* Hero countdown (until 14 Oct) */
+.hero-countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 18px;
+}
+.hero-countdown-label {
+  margin: 0;
+  font-size: 9px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: #5d776d;
+  text-transform: uppercase;
+}
+.hero-countdown-units {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hero-cd-unit {
+  min-width: 52px;
+  padding: 8px 6px;
+  background: rgba(237, 240, 232, 0.85);
+  border: 1px solid rgba(54, 94, 71, 0.14);
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(41, 72, 62, 0.06);
+}
+.hero-cd-value {
+  display: block;
+  font-family: Manrope, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #29483e;
+  line-height: 1.1;
+}
+.hero-cd-sub {
+  display: block;
+  margin-top: 3px;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5d776d;
+  font-weight: 700;
+}
+.hero-cd-sep {
+  font-family: Manrope, sans-serif;
+  font-weight: 700;
+  color: #3c6250;
+  opacity: 0.55;
+  font-size: 1rem;
+}
+@media (max-width: 700px) {
+  .hero-cd-unit { min-width: 44px; padding: 7px 4px; }
+  .hero-cd-value { font-size: 1.05rem; }
+}

@@ -14,11 +14,11 @@ export const CONFIG = Object.freeze({
   diveStart: 0.08, divePeak: 0.22, diveEnd: 0.32,
 });
 export const BIOMES = [
- ['14 · 15 · 16', 'Mark your calendar — Farlands runs across three full days.'],
+ ['Oct 14–16.', 'Save the dates. Farlands is coming.'],
   ['₹60K+ prize pool.', 'Present your build and compete for the Farlands loot.'],
   ['Certificates for all.', 'Every participant receives a certificate of participation.'],
   ['Open to BTech / BE.', 'All BTech and BE students are welcome to join the sprint.'],
-  ['Problem statements drop early.', 'Themes go live 3 days before the hackathon begins.'],
+  ['Problem statements — 3 days before.', 'Get ready before kickoff.'],
   ['Touchdown in Farlands.', 'Your squad has landed. The 48-hour sprint begins here.'],
 ];
 export const clamp = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
