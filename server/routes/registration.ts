@@ -169,7 +169,7 @@ export async function POST(request: Request) {
       .insert({
         team_id: team.id,
         registration_number: registrationNumber,
-        fee_amount: 120000,
+        fee_amount: 150000,
         currency: "INR",
         status: "pending_payment",
       })
