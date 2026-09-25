@@ -298,56 +298,15 @@ function initRegistration() {
       submittedAt: new Date().toISOString(),
     };
 
-    // ── SUBMIT TO BACKEND ──────────────────────────────────────────────────────
+    // ── LOCAL ONLY — then go straight to UPI payment page ───────────────────
     setSubmitting(true);
     try {
-      const response = await fetch('/api/registration', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        let message = 'Registration could not be completed. Please try again.';
-        if (response.status === 429) {
-          message = 'Too many attempts from this device. Please wait a few minutes before trying again.';
-        } else {
-          try {
-            const data = await response.json();
-            if (data && typeof data.error === 'string') message = data.error;
-          } catch { /* keep default message */ }
-        }
-        showFormMessage(message);
-        setSubmitting(false);
-        return;
-      }
-
-      let result = null;
-      try {
-        result = await response.json();
-      } catch { /* optional body */ }
-
-      const teamId =
-        result?.team?.teamId ||
-        result?.registration?.teamId ||
-        result?.registration?.registrationNumber ||
-        null;
-
-      // Show success state with Team ID + payment CTA
-      if (successEl) {
-        formEl.style.display = 'none';
-        const teamIdEl = document.getElementById('reg-team-id-value');
-        if (teamIdEl && teamId) teamIdEl.textContent = teamId;
-        if (teamId) {
-          try {
-            sessionStorage.setItem('farlands_team_id', teamId);
-          } catch { /* ignore */ }
-        }
-        successEl.classList.add('visible');
-        successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      sessionStorage.setItem('farlands_pending_registration', JSON.stringify(payload));
+      sessionStorage.removeItem('farlands_team_id');
+      window.location.href = '/payment.html';
+      return;
     } catch (error) {
-      showFormMessage('Network error. Please check your connection and try again. Is the API server running on port 3000?');
+      showFormMessage('Could not save your details in this browser. Please enable storage and try again.');
       setSubmitting(false);
     }
   });

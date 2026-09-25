@@ -3,150 +3,170 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#d5e5e4" />
     <meta name="robots" content="noindex,nofollow" />
-    <title>Admin — Farlands Hackathon 2026</title>
-    <link rel="icon" type="image/png" href="/farlands-logo.jpeg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <title>Admin — Farlands (Google Sheets)</title>
+    <link rel="icon" type="image/png" href="/farlands-logo.png" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root { --bg:#d5e5e4; --card:#fff; --ink:#29483e; --muted:#5d776d; --accent:#3c6250; --border:rgba(54,94,71,.14); --ok:#1f5c38; --ok-bg:#d8f0e0; --warn:#7a5b12; --warn-bg:#f5edd4; --err:#8c3232; --err-bg:#f5ddd8; }
+      * { box-sizing: border-box; }
+      body { margin:0; min-height:100vh; font-family:"DM Sans",system-ui,sans-serif; background:linear-gradient(180deg,#d0e0df,var(--bg)); color:var(--ink); }
+      .shell { max-width:1100px; margin:0 auto; padding:20px 14px 48px; }
+      .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; box-shadow:0 8px 32px rgba(41,72,62,.08); margin-bottom:16px; }
+      h1 { font-family:Manrope,sans-serif; font-size:1.35rem; margin:0 0 8px; }
+      .muted { color:var(--muted); font-size:13px; }
+      label { display:block; font-size:12px; font-weight:700; color:var(--muted); margin:10px 0 6px; }
+      input { width:100%; max-width:360px; padding:11px 12px; border-radius:10px; border:1px solid rgba(54,94,71,.22); font:500 14px "DM Sans",system-ui,sans-serif; }
+      .btn { margin-top:12px; border:none; border-radius:999px; padding:11px 18px; background:var(--accent); color:#f4f6f0; font:700 12px Manrope,sans-serif; cursor:pointer; }
+      .btn.ghost { background:transparent; color:var(--accent); border:1.5px solid rgba(60,98,80,.3); }
+      .btn.ok { background:var(--ok-bg); color:var(--ok); margin-top:0; }
+      .btn.danger { background:var(--err-bg); color:var(--err); margin-top:0; }
+      .err { color:var(--err); font-size:13px; font-weight:600; margin-top:8px; }
+      .okmsg { color:var(--ok); font-size:13px; font-weight:600; margin-top:8px; }
+      table { width:100%; border-collapse:collapse; font-size:13px; }
+      th { text-align:left; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:8px 6px; border-bottom:1px solid var(--border); }
+      td { padding:10px 6px; border-bottom:1px solid rgba(54,94,71,.08); vertical-align:top; }
+      .badge { display:inline-block; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:700; }
+      .badge-warn { background:var(--warn-bg); color:var(--warn); }
+      .badge-ok { background:var(--ok-bg); color:var(--ok); }
+      .badge-err { background:var(--err-bg); color:var(--err); }
+      .badge-muted { background:#edf0e8; color:var(--muted); }
+      .actions { display:flex; flex-wrap:wrap; gap:6px; }
+      .members { margin:0; padding-left:16px; font-size:12px; }
+      .toolbar { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+      @media (max-width:720px) {
+        table, thead, tbody, th, td, tr { display:block; }
+        thead { display:none; }
+        tr { border:1px solid var(--border); border-radius:12px; padding:12px; margin-bottom:10px; background:#f8faf6; }
+        td { border:none; padding:4px 0; }
+      }
+    </style>
   </head>
-  <body class="admin-body">
-    <div id="admin-app">
-      <!-- Login only — no data visible until authenticated -->
-      <section id="admin-login-view" class="admin-shell" aria-labelledby="admin-login-title">
-        <div class="admin-card">
-          <div class="admin-brand">
-            <img src="/farlands-logo.jpeg" alt="" class="admin-logo" width="120" height="40" />
+  <body>
+    <div class="shell">
+      <div class="card" id="login-card">
+        <h1>Farlands Admin</h1>
+        <p class="muted">Google Sheets backend. Enter the same <code>ADMIN_SECRET</code> you set in Apps Script.</p>
+        <label for="secret">Admin secret</label>
+        <input id="secret" type="password" autocomplete="current-password" placeholder="ADMIN_SECRET" />
+        <button class="btn" id="btn-login" type="button">Unlock dashboard</button>
+        <p id="login-err" class="err" hidden></p>
+      </div>
+      <div id="dash" hidden>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
             <div>
-              <p class="admin-eyebrow">Farlands · Organizer</p>
-              <h1 id="admin-login-title">Admin sign in</h1>
+              <h1>Registrations</h1>
+              <p class="muted">Stored in your Google Sheet · Approve / reject payments here</p>
+            </div>
+            <div class="toolbar">
+              <button class="btn ghost" type="button" id="btn-refresh">Refresh</button>
+              <button class="btn ghost" type="button" id="btn-export">Export CSV</button>
+              <button class="btn ghost" type="button" id="btn-logout">Lock</button>
             </div>
           </div>
-          <p class="admin-lede">Sign in with the organizer email and password. Registration details stay hidden until you authenticate.</p>
-          <form id="admin-login-form" class="admin-form" novalidate>
-            <label class="admin-field">
-              <span>Email</span>
-              <input id="admin-email" name="email" type="email" autocomplete="username" required placeholder="admin@example.com" />
-            </label>
-            <label class="admin-field">
-              <span>Password</span>
-              <input id="admin-password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" />
-            </label>
-            <p id="admin-login-error" class="admin-error" role="alert" hidden></p>
-            <button type="submit" class="admin-btn-primary" id="admin-login-btn">Sign in</button>
-          </form>
-          <p class="admin-foot"><a href="/">← Back to registration site</a></p>
-        </div>
-      </section>
-
-      <!-- Dashboard — always starts hidden -->
-      <section id="admin-dash-view" class="admin-dash" hidden>
-        <header class="admin-topbar">
-          <div class="admin-brand compact">
-            <img src="/farlands-logo.jpeg" alt="" class="admin-logo-sm" />
-            <span>Farlands Admin</span>
+          <p id="dash-msg" class="okmsg" hidden></p>
+          <div style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Team</th>
+                  <th>Members</th>
+                  <th>Payment</th>
+                  <th>Approve / Reject</th>
+                </tr>
+              </thead>
+              <tbody id="tbody"><tr><td colspan="4" class="muted">Loading…</td></tr></tbody>
+            </table>
           </div>
-          <button type="button" class="admin-btn-ghost" id="admin-logout-btn">Sign out</button>
-        </header>
-
-        <main class="admin-main">
-          <div id="admin-banner" class="admin-banner" hidden role="status"></div>
-
-          <div class="admin-stat-grid" id="stats-grid">
-            <div class="admin-stat"><span class="label">Loading…</span><strong>—</strong></div>
-          </div>
-
-          <div class="admin-panel review-panel">
-            <div class="admin-panel-head">
-              <div>
-                <h2>Payment approval</h2>
-                <p class="admin-sub">Approve or reject submitted payment proofs. Status updates immediately.</p>
-              </div>
-              <div class="admin-toolbar">
-                <select id="review-filter" class="admin-search">
-                  <option value="pending">Pending only</option>
-                  <option value="all">All submissions</option>
-                  <option value="verified">Verified only</option>
-                  <option value="rejected">Rejected only</option>
-                </select>
-                <button type="button" class="admin-btn-sm" id="review-refresh">Refresh</button>
-              </div>
-            </div>
-            <div class="admin-table-wrap">
-              <table class="admin-table" id="review-table">
-                <thead>
-                  <tr>
-                    <th>Team name</th>
-                    <th>Status</th>
-                    <th>Approve / Reject</th>
-                  </tr>
-                </thead>
-                <tbody id="review-tbody">
-                  <tr><td colspan="3" class="muted">Loading…</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="master-cards" id="review-cards"></div>
-          </div>
-
-          <div class="admin-panel master-panel">
-            <div class="admin-panel-head">
-              <div>
-                <h2>All registrations</h2>
-                <p class="admin-sub">Team, members (with phone), reg ID &amp; payment status — one table</p>
-              </div>
-              <div class="admin-toolbar">
-                <input type="search" id="master-search" placeholder="Search team, email, reg ID…" class="admin-search" />
-                <select id="master-status" class="admin-search">
-                  <option value="">All payment statuses</option>
-                  <option value="no_payment">No proof yet</option>
-                  <option value="pending">Pending verification</option>
-                  <option value="verified">Verified / paid</option>
-                  <option value="rejected">Rejected</option>
-                </select>
-                <button type="button" class="admin-btn-sm" id="master-refresh">Refresh</button>
-                <button type="button" class="admin-btn-primary admin-btn-sm" id="master-export">Export CSV + Excel</button>
-              </div>
-            </div>
-
-            <div class="admin-table-wrap">
-              <table class="admin-table master-table" id="master-table">
-                <thead>
-                  <tr>
-                    <th>Reg ID</th>
-                    <th>Team</th>
-                    <th>Participants (name · email · phone)</th>
-                    <th>Payment status</th>
-                    <th>Created</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="master-tbody">
-                  <tr><td colspan="7" class="muted">Sign in required</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Mobile card list -->
-            <div class="master-cards" id="master-cards" aria-live="polite"></div>
-          </div>
-        </main>
-      </section>
-
-      <!-- Modal -->
-      <div id="admin-modal" class="admin-modal" hidden>
-        <div class="admin-modal-backdrop" data-close-modal></div>
-        <div class="admin-modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-          <header class="admin-modal-head">
-            <h2 id="modal-title">Details</h2>
-            <button type="button" class="admin-icon-btn" data-close-modal aria-label="Close">×</button>
-          </header>
-          <div id="modal-body" class="admin-modal-body"></div>
-          <footer id="modal-foot" class="admin-modal-foot"></footer>
         </div>
       </div>
     </div>
-    <script type="module" src="/src/admin.js"></script>
+    <script type="module">
+      import { sheetsApi, ADMIN_SECRET as CONFIG_SECRET } from './src/config.js';
+      let secret = CONFIG_SECRET || '';
+      let rows = [];
+      const loginCard = document.getElementById('login-card');
+      const dash = document.getElementById('dash');
+      const tbody = document.getElementById('tbody');
+      const loginErr = document.getElementById('login-err');
+      const dashMsg = document.getElementById('dash-msg');
+      function badge(status) {
+        const s = String(status || '').toLowerCase();
+        if (s === 'verified' || s === 'paid') return '<span class="badge badge-ok">Verified</span>';
+        if (s === 'pending_verification') return '<span class="badge badge-warn">Pending verification</span>';
+        if (s === 'rejected') return '<span class="badge badge-err">Rejected</span>';
+        return '<span class="badge badge-muted">Awaiting payment</span>';
+      }
+      function showMsg(text) { dashMsg.hidden = !text; dashMsg.textContent = text || ''; }
+      function esc(v) {
+        return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+      async function load() {
+        tbody.innerHTML = '<tr><td colspan="4" class="muted">Loading…</td></tr>';
+        try {
+          const data = await sheetsApi({ action: 'list', adminSecret: secret });
+          rows = data.registrations || [];
+          render();
+        } catch (e) {
+          tbody.innerHTML = '<tr><td colspan="4" class="err">' + esc(e.message) + '</td></tr>';
+        }
+      }
+      function render() {
+        if (!rows.length) { tbody.innerHTML = '<tr><td colspan="4" class="muted">No registrations yet</td></tr>'; return; }
+        tbody.innerHTML = rows.map((r) => {
+          const members = (r.members || []).map((m) => '<li><strong>' + esc(m.name) + '</strong> · ' + esc(m.email) + ' · ' + esc(m.phone || '') + '</li>').join('');
+          const canReview = String(r.paymentStatus).toLowerCase() === 'pending_verification';
+          const actions = canReview
+            ? '<div class="actions"><button class="btn ok" data-approve="' + esc(r.teamId) + '">Approve</button><button class="btn danger" data-reject="' + esc(r.teamId) + '">Reject</button></div>'
+            : '<span class="muted">—</span>';
+          return '<tr><td><strong>' + esc(r.teamName) + '</strong><div class="muted">' + esc(r.teamId) + ' · ' + esc(r.registrationNumber || '') + '</div></td><td><ul class="members">' + (members || '<li>—</li>') + '</ul></td><td>' + badge(r.paymentStatus) + (r.utr ? '<div class="muted">UTR: ' + esc(r.utr) + '</div>' : '') + (r.screenshotUrl ? '<div><a href="' + esc(r.screenshotUrl) + '" target="_blank" rel="noopener">View screenshot</a></div>' : '') + '</td><td>' + actions + '</td></tr>';
+        }).join('');
+      }
+      document.getElementById('btn-login').addEventListener('click', async () => {
+        secret = document.getElementById('secret').value.trim() || CONFIG_SECRET;
+        loginErr.hidden = true;
+        try {
+          await sheetsApi({ action: 'list', adminSecret: secret });
+          loginCard.hidden = true; dash.hidden = false; await load();
+        } catch (e) {
+          loginErr.hidden = false; loginErr.textContent = e.message || 'Login failed';
+        }
+      });
+      if (CONFIG_SECRET) document.getElementById('secret').value = CONFIG_SECRET;
+      document.getElementById('btn-refresh').addEventListener('click', load);
+      document.getElementById('btn-logout').addEventListener('click', () => { secret = ''; dash.hidden = true; loginCard.hidden = false; });
+      document.getElementById('btn-export').addEventListener('click', () => {
+        const headers = ['Team ID','Team Name','Reg Number','Payment Status','UTR','Members','Emails','Phones'];
+        const lines = [headers.join(',')];
+        for (const r of rows) {
+          const names = (r.members || []).map((m) => m.name).join('; ');
+          const emails = (r.members || []).map((m) => m.email).join('; ');
+          const phones = (r.members || []).map((m) => m.phone).join('; ');
+          const cells = [r.teamId, r.teamName, r.registrationNumber, r.paymentStatus, r.utr || '', names, emails, phones].map((c) => '"' + String(c).replace(/"/g, '""') + '"');
+          lines.push(cells.join(','));
+        }
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/csv' }));
+        a.download = 'farlands-registrations-' + new Date().toISOString().slice(0, 10) + '.csv';
+        a.click();
+      });
+      document.addEventListener('click', async (e) => {
+        const t = e.target;
+        if (!(t instanceof HTMLElement)) return;
+        const approve = t.getAttribute('data-approve');
+        const reject = t.getAttribute('data-reject');
+        if (approve) {
+          if (!confirm('Approve payment for ' + approve + '?')) return;
+          try { await sheetsApi({ action: 'set_payment_status', adminSecret: secret, teamId: approve, status: 'verified' }); showMsg('Approved ' + approve); await load(); }
+          catch (err) { showMsg(err.message); }
+        }
+        if (reject) {
+          const reason = prompt('Rejection reason?') || 'Rejected';
+          try { await sheetsApi({ action: 'set_payment_status', adminSecret: secret, teamId: reject, status: 'rejected', reason }); showMsg('Rejected ' + reject); await load(); }
+          catch (err) { showMsg(err.message); }
+        }
+      });
+    </script>
   </body>
 </html>

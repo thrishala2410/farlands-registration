@@ -1,338 +1,301 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#d5e5e4" />
+    <meta name="description" content="Farlands Hackathon 2026 — a 48-hour innovation sprint. From Vishwakarma's ancient architecture to the infinite glitched horizons of Minecraft. Build, code, and conquer." />
+    <title>Farlands Hackathon 2026 — Beyond the Farlands</title>
+    <link rel="icon" type="image/png" href="/farlands-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#d5e5e4" />
-  <meta name="description"
-    content="Farlands Hackathon 2026 — a 48-hour innovation sprint. From Vishwakarma's ancient architecture to the infinite glitched horizons of Minecraft. Build, code, and conquer." />
-  <title>Farlands Hackathon 2026 — Beyond the Farlands</title>
-  <link rel="icon" type="image/png" href="/farlands-logo.jpeg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet" />
-</head>
-
-<body>
-
-  <!-- ═══════════════════════════════════════════════════════════
+    <!-- ═══════════════════════════════════════════════════════════
          HACKATHON NAV — becomes visible when scrolled to content
     ═══════════════════════════════════════════════════════════ -->
-  <nav id="hackathon-nav" aria-label="Farlands Hackathon navigation">
-    <a class="nav-brand nav-brand-logo" href="#section-hero" aria-label="Farlands Hackathon 2026">
-      <img src="/farlands-logo.jpeg" alt="Farlands" class="nav-brand-img" />
-      <span class="nav-brand-year">HACKATHON 2026</span>
-    </a>
-    <ul class="nav-links" role="list">
-      <li><a href="#section-about">About</a></li>
-      <li><a href="#section-faq">FAQ</a></li>
-      <li><a href="#section-register" class="nav-cta">Register Now</a></li>
-    </ul>
-    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
+    <nav id="hackathon-nav" aria-label="Farlands Hackathon navigation">
+      <a class="nav-brand nav-brand-logo" href="#section-hero" aria-label="Farlands Hackathon 2026">
+        <img src="/farlands-logo.png" alt="Farlands" class="nav-brand-img" />
+        <span class="nav-brand-year">HACKATHON 2026</span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="#section-about">About</a></li>
+        <li><a href="#section-faq">FAQ</a></li>
+        <li><a href="#section-register" class="nav-cta">Register Now</a></li>
+      </ul>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
 
-  <!-- Mobile menu -->
-  <div class="nav-mobile-menu" id="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
-    <a href="#section-about">About</a>
-    <a href="#section-faq">FAQ</a>
-    <a href="#section-register" class="nav-mobile-cta">Register Now →</a>
-  </div>
+    <!-- Mobile menu -->
+    <div class="nav-mobile-menu" id="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+      <a href="#section-about">About</a>
+      <a href="#section-faq">FAQ</a>
+      <a href="#section-register" class="nav-mobile-cta">Register Now →</a>
+    </div>
 
-  <!-- ═══════════════════════════════════════════════════════════
+    <!-- ═══════════════════════════════════════════════════════════
          3D HERO EXPERIENCE — untouched, scroll-driven
     ═══════════════════════════════════════════════════════════ -->
-  <main id="journey" aria-label="Scroll through the Farlands voxel world">
-    <div class="stage">
-      <div class="sky-glow" aria-hidden="true"></div>
-      <header class="header">
-        <a class="wordmark wordmark-logo" href="#" aria-label="Farlands, return to the sky"><img
-            src="/farlands-logo.jpeg" alt="Farlands" class="wordmark-img" /></a>
-        <span class="header-note">A LITTLE WORLD OF WONDER</span>
-        <button class="soundless" id="return-top" aria-label="Restart the journey">Back to the sky <span
-            aria-hidden="true">↗</span></button>
-      </header>
-      <div class="intro" id="intro">
-        <div class="hero-countdown fl-animate" aria-label="Countdown to Farlands">
-          <p class="hero-countdown-label">HACKATHON STARTS IN</p>
-          <div class="hero-countdown-units">
-            <div class="hero-cd-unit"><span class="hero-cd-value" id="hero-cd-days">--</span><span
-                class="hero-cd-sub">Days</span></div>
-            <span class="hero-cd-sep" aria-hidden="true">:</span>
-            <div class="hero-cd-unit"><span class="hero-cd-value" id="hero-cd-hours">--</span><span
-                class="hero-cd-sub">Hours</span></div>
-            <span class="hero-cd-sep" aria-hidden="true">:</span>
-            <div class="hero-cd-unit"><span class="hero-cd-value" id="hero-cd-mins">--</span><span
-                class="hero-cd-sub">Mins</span></div>
-            <span class="hero-cd-sep" aria-hidden="true">:</span>
-            <div class="hero-cd-unit"><span class="hero-cd-value" id="hero-cd-secs">--</span><span
-                class="hero-cd-sub">Secs</span></div>
+    <main id="journey" aria-label="Scroll through the Farlands voxel world">
+      <div class="stage">
+        <div class="sky-glow" aria-hidden="true"></div>
+        <header class="header">
+          <a class="wordmark wordmark-logo" href="#" aria-label="Farlands, return to the sky"><img src="/farlands-logo.png" alt="Farlands" class="wordmark-img" /></a>
+          <span class="header-note">A LITTLE WORLD OF WONDER</span>
+          <button class="soundless" id="return-top" aria-label="Restart the journey">Back to the sky <span aria-hidden="true">↗</span></button>
+        </header>
+        <div class="intro" id="intro">
+          <div class="hero-countdown fl-animate" aria-label="Countdown to Farlands">
+            <p class="hero-countdown-label">HACKATHON STARTS IN</p>
+            <div class="hero-countdown-units">
+              <div class="hero-cd-unit"><span class="hero-cd-value" id="hero-cd-days">--</span><span class="hero-cd-sub">Days</span></div>
+              <span class="hero-cd-sep" aria-hidden="true">:</span>
+              <div class="hero-cd-unit"><span class="hero-cd-value" id="hero-cd-hours">--</span><span class="hero-cd-sub">Hours</span></div>
+              <span class="hero-cd-sep" aria-hidden="true">:</span>
+              <div class="hero-cd-unit"><span class="hero-cd-value" id="hero-cd-mins">--</span><span class="hero-cd-sub">Mins</span></div>
+              <span class="hero-cd-sep" aria-hidden="true">:</span>
+              <div class="hero-cd-unit"><span class="hero-cd-value" id="hero-cd-secs">--</span><span class="hero-cd-sub">Secs</span></div>
+            </div>
           </div>
+          <p class="eyebrow">SOMEWHERE ABOVE THE ORDINARY</p>
+          <h1>A different<br /><em>perspective.</em></h1>
+          <p class="intro-description">Sometimes, all it takes is a little leap.</p>
         </div>
-        <p class="eyebrow">SOMEWHERE ABOVE THE ORDINARY</p>
-        <h1>A different<br /><em>perspective.</em></h1>
-        <p class="intro-description">Sometimes, all it takes is a little leap.</p>
+        <div id="scene" role="img" aria-label="Steve falling through a pastel sky onto a rotating miniature voxel world"></div>
+        <div class="loading" id="loading" role="status"><span></span>Finding our little world…</div>
+        <div class="error" id="error" hidden role="alert"><h2>The sky is taking a moment.</h2><p></p><button id="retry">Try again ↗</button></div>
+        <div class="chapter" id="chapter" aria-hidden="true"><span id="chapter-number">01 / 06</span><h2 id="chapter-title">Touchdown in Farlands.</h2><p id="chapter-description">Your squad has landed. The 48-hour sprint begins here.</p></div>
+        <footer class="footer">
+          <div class="scroll-cue"><span class="scroll-line"></span><span id="scroll-label">SCROLL TO TAKE THE LEAP</span></div>
+          <div class="progress" aria-label="Journey progress"><span id="progress-label">00</span><span class="progress-track"><i id="progress-bar"></i></span><span>100</span></div>
+        </footer>
+        <p class="sr-only" id="accessible-status" aria-live="polite">Above the clouds. Scroll to begin.</p>
       </div>
-      <div id="scene" role="img" aria-label="Steve falling through a pastel sky onto a rotating miniature voxel world">
-      </div>
-      <div class="loading" id="loading" role="status"><span></span>Finding our little world…</div>
-      <div class="error" id="error" hidden role="alert">
-        <h2>The sky is taking a moment.</h2>
-        <p></p><button id="retry">Try again ↗</button>
-      </div>
-      <div class="chapter" id="chapter" aria-hidden="true"><span id="chapter-number">01 / 06</span>
-        <h2 id="chapter-title">Touchdown in Farlands.</h2>
-        <p id="chapter-description">Your squad has landed. The 48-hour sprint begins here.</p>
-      </div>
-      <footer class="footer">
-        <div class="scroll-cue"><span class="scroll-line"></span><span id="scroll-label">SCROLL TO TAKE THE LEAP</span>
-        </div>
-        <div class="progress" aria-label="Journey progress"><span id="progress-label">00</span><span
-            class="progress-track"><i id="progress-bar"></i></span><span>100</span></div>
-      </footer>
-      <p class="sr-only" id="accessible-status" aria-live="polite">Above the clouds. Scroll to begin.</p>
-    </div>
-  </main>
+    </main>
 
-  <!-- ═══════════════════════════════════════════════════════════
+    <!-- ═══════════════════════════════════════════════════════════
          HACKATHON CONTENT — begins after the 3D hero
     ═══════════════════════════════════════════════════════════ -->
-  <div id="hackathon-content">
+    <div id="hackathon-content">
 
-    <!-- ── HERO INFO ───────────────────────────────────────── -->
-    <section id="section-hero" class="fl-section" aria-label="Hackathon overview">
-      <div class="fl-section-inner" style="text-align:center;">
-        <div class="hero-logo-wrap fl-animate">
-          <img src="/farlands-logo.jpeg" alt="Farlands" class="hero-logo" width="360" height="120" />
+      <!-- ── HERO INFO ───────────────────────────────────────── -->
+      <section id="section-hero" class="fl-section" aria-label="Hackathon overview">
+        <div class="fl-section-inner" style="text-align:center;">
+          <div class="hero-logo-wrap fl-animate">
+            <img src="/farlands-logo.png" alt="Farlands" class="hero-logo" width="360" height="120" />
+          </div>
+          <p class="hero-year fl-animate">HACKATHON 2026</p>
+          <p class="hero-tagline fl-animate">BEYOND THE FARLANDS.</p>
+          <p class="hero-description fl-animate">
+            From Vishwakarma's divine architecture to the infinite glitched horizons of Minecraft.
+            Build, code, and conquer in a 48-hour voxel innovation sprint.
+          </p>
+
+          <div class="hero-ctas fl-animate">
+            <a href="#section-register" class="btn-primary block-cta" id="hero-cta-register">
+              <span class="btn-block-bevel"></span>
+              Register Your Squad Now →
+            </a>
+            <a href="#section-about" class="btn-secondary block-cta-sec" id="hero-cta-about">Learn More</a>
+          </div>
         </div>
-        <p class="hero-year fl-animate">HACKATHON 2026</p>
-        <p class="hero-tagline fl-animate">BEYOND THE FARLANDS.</p>
-        <p class="hero-description fl-animate">
-          From Vishwakarma's divine architecture to the infinite glitched horizons of Minecraft.
-          Build, code, and conquer in a 48-hour voxel innovation sprint.
-        </p>
+      </section>
 
-        <div class="hero-ctas fl-animate">
-          <a href="#section-register" class="btn-primary block-cta" id="hero-cta-register">
-            <span class="btn-block-bevel"></span>
+      <!-- ── ABOUT ──────────────────────────────────────────── -->
+      <section id="section-about" class="fl-section" aria-labelledby="about-title">
+        <div class="fl-section-inner">
+          <p class="fl-eyebrow fl-animate"><span class="voxel-tag">[ CODEX ]</span> THE CONTINUOUS JOURNEY</p>
+          <h2 class="fl-section-title fl-animate" id="about-title">Where Worlds<br>Collide</h2>
+          <p style="font-size:14px;line-height:1.8;color:var(--fl-ink-muted);max-width:640px;margin:0 0 48px;" class="fl-animate">
+            In Minecraft, the Farlands represent the legendary edge of terrain generation — where mathematical boundaries bend,
+            creativity multiplies, and impossible voxel structures take shape.
+          </p>
+          <div class="about-grid">
+            <div class="about-card fl-animate">
+              <div class="card-voxel-header">
+                <span class="card-block-badge">[ BLOCK 01 ]</span>
+                <span class="card-dim-tag">ORIGIN</span>
+              </div>
+              <div class="card-icon-wrap">
+                <svg viewBox="0 0 32 32" class="voxel-svg-icon" aria-hidden="true">
+                  <path fill="#7a8c85" d="M16 2 L28 8 L28 24 L16 30 L4 24 L4 8 Z"/>
+                  <path fill="#9cbb8a" d="M16 2 L28 8 L16 14 L4 8 Z"/>
+                  <path fill="#655342" d="M4 8 L16 14 L16 30 L4 24 Z"/>
+                  <path fill="#54635d" d="M28 8 L28 24 L16 30 L16 14 Z"/>
+                </svg>
+              </div>
+              <h3 class="about-card-title">Vishwakarma's Legacy</h3>
+              <p class="about-card-desc">Built on the foundation of architectural precision, strength, and structural mastery established in Vishwakarma.</p>
+            </div>
+            <div class="about-card fl-animate">
+              <div class="card-voxel-header">
+                <span class="card-block-badge">[ BLOCK 02 ]</span>
+                <span class="card-dim-tag">CRAFTING</span>
+              </div>
+              <div class="card-icon-wrap">
+                <svg viewBox="0 0 32 32" class="voxel-svg-icon" aria-hidden="true">
+                  <path fill="#6e5845" d="M16 2 L28 8 L28 24 L16 30 L4 24 L4 8 Z"/>
+                  <path fill="#d4b46e" d="M16 2 L28 8 L16 14 L4 8 Z"/>
+                  <path fill="#c27a72" d="M4 8 L16 14 L16 30 L4 24 Z"/>
+                  <path fill="#a3574d" d="M28 8 L28 24 L16 30 L16 14 Z"/>
+                </svg>
+              </div>
+              <h3 class="about-card-title">Voxel Innovation</h3>
+              <p class="about-card-desc">Deconstruct complex global challenges block by block. Use AI, Web3, and open tools to construct the future.</p>
+            </div>
+            <div class="about-card fl-animate">
+              <div class="card-voxel-header">
+                <span class="card-block-badge">[ BLOCK 03 ]</span>
+                <span class="card-dim-tag">THE EDGE</span>
+              </div>
+              <div class="card-icon-wrap">
+                <svg viewBox="0 0 32 32" class="voxel-svg-icon" aria-hidden="true">
+                  <path fill="#55645e" d="M16 2 L28 8 L28 24 L16 30 L4 24 L4 8 Z"/>
+                  <path fill="#9a7896" d="M16 2 L28 8 L16 14 L4 8 Z"/>
+                  <path fill="#7a5b77" d="M4 8 L16 14 L16 30 L4 24 Z"/>
+                  <path fill="#433442" d="M28 8 L28 24 L16 30 L16 14 Z"/>
+                </svg>
+              </div>
+              <h3 class="about-card-title">Uncharted Territory</h3>
+              <p class="about-card-desc">Push beyond traditional hackathon limits. Discover glitches in old paradigms and turn them into groundbreaking breakthroughs.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── FAQ ────────────────────────────────────────────── -->
+      <section id="section-faq" class="fl-section" aria-labelledby="faq-title">
+        <div class="fl-section-inner">
+          <p class="fl-eyebrow fl-animate"><span class="voxel-tag">[ ARCHIVE ]</span> KNOWLEDGE BASE</p>
+          <h2 class="fl-section-title fl-animate" id="faq-title">Frequently Asked<br>Questions</h2>
+          <div class="faq-list fl-animate" role="list">
+            <details class="faq-item" role="listitem">
+              <summary>
+                <span class="faq-q-text">Who can participate in Farlands Hackathon?</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </summary>
+              <p class="faq-answer">
+                Farlands Hackathon is open to students, professionals, and independent creators passionate about
+                technology and innovation. Whether you're a developer, designer, or product thinker — all skill levels
+                are welcome. Eligibility details will be confirmed by the organizers closer to the event.
+              </p>
+            </details>
+            <details class="faq-item" role="listitem">
+              <summary>
+                <span class="faq-q-text">What is the squad/team size limit?</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </summary>
+              <p class="faq-answer">
+                Teams must have 2 to 4 members. The first member is the team lead; the others are team members.
+                Solo registration is not allowed.
+              </p>
+            </details>
+            <details class="faq-item" role="listitem">
+              <summary>
+                <span class="faq-q-text">Is there any registration fee?</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </summary>
+              <p class="faq-answer">
+                Yes. The registration fee is ₹1,500 per team, payable via UPI after you register.
+              </p>
+            </details>
+            <details class="faq-item" role="listitem">
+              <summary>
+                <span class="faq-q-text">How does the transition from Vishwakarma work?</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </summary>
+              <p class="faq-answer">
+                Farlands Hackathon 2026 builds on the legacy of Vishwakarma, drawing inspiration from its
+                architectural precision and creative spirit. Returning participants from Vishwakarma will receive
+                priority registration and special recognition during the event.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── REGISTRATION ────────────────────────────────────── -->
+      <section id="section-register" class="fl-section" aria-labelledby="register-title">
+        <div class="reg-header">
+          <p class="fl-eyebrow fl-animate"><span class="voxel-tag">[ TERMINAL ]</span> ENTER THE FARLANDS</p>
+          <h2 class="fl-section-title fl-animate" id="register-title">Assemble Your<br>Squad</h2>
+          <p style="font-size:14px;line-height:1.8;color:var(--fl-ink-muted);max-width:540px;" class="fl-animate">
+            Register your squad of 2 to 4 builders. Fill in your team credentials below to claim your spot on the grid.
+          </p>
+        </div>
+
+        <form class="reg-form fl-animate" id="reg-form" novalidate aria-label="Team registration form">
+          <!-- Team Name -->
+          <div class="team-name-section">
+            <div class="team-name-field">
+              <p class="team-name-label"><span class="inv-slot-icon">🏷</span> SQUAD / TEAM NAME *</p>
+              <input class="field-input team-name-input" id="team-name" name="team-name"
+                type="text" placeholder="Enter your team name (e.g. Nether Engineers)…" required aria-required="true" autocomplete="off">
+            </div>
+          </div>
+
+          <!-- Teammate slots (built by JS as inventory slots) -->
+          <div id="teammates-container"></div>
+
+          <!-- Actions -->
+          <div class="reg-actions">
+            <button class="btn-add block-button" type="button" id="btn-add-teammate" aria-label="Add a teammate">
+              + Add Squad Member
+            </button>
+            <button class="btn-submit block-button-primary" type="submit" id="btn-submit-reg">
+              Register Squad Now →
+            </button>
+            <span class="reg-count" id="reg-count" aria-live="polite">2 of 4 slots filled</span>
+          </div>
+        </form>
+
+        <!-- Success state (shown after submit) -->
+        <div class="reg-success" id="reg-success" role="status" aria-live="polite">
+          <div class="reg-success-icon">🌿</div>
+          <h3 class="reg-success-title">Almost there!</h3>
+          <p class="reg-success-desc">
+            Your squad details are held on this device only until payment is done.
+            Complete the <strong>₹1,500 UPI payment</strong> and upload your screenshot to finalize registration.
+            Your <strong>Team ID</strong> appears after payment is submitted.
+          </p>
+          <p class="reg-success-next" style="margin-top:12px;">
+            <a href="/payment.html" id="reg-payment-link" class="btn-primary" style="display:inline-block;margin-top:8px;">Continue to UPI Payment →</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- ── FINAL CTA ───────────────────────────────────────── -->
+      <section id="section-cta" aria-label="Final registration call to action">
+        <div style="max-width:800px;margin:0 auto;text-align:center;">
+          <div class="voxel-pill-badge fl-animate" style="margin:0 auto 20px;">
+            <span class="voxel-cube-dot"></span> X: 12550821 / Y: 64 / Z: 12550821
+          </div>
+          <p class="cta-eyebrow fl-animate">READY TO ENTER</p>
+          <h2 class="cta-title fl-animate">THE<br><em>FARLANDS?</em></h2>
+          <p class="cta-desc fl-animate">
+            Registration takes under 2 minutes. Bring your squad, craft your prototype, and claim your place in history.
+          </p>
+          <a href="#section-register" class="cta-btn block-cta-btn fl-animate" id="footer-cta-btn">
             Register Your Squad Now →
           </a>
-          <a href="/farlands-rules.pdf" class="btn-secondary block-cta-sec" id="hero-cta-rules" target="_blank"
-            rel="noopener noreferrer">
-            Rules
-          </a>
         </div>
-      </div>
-  </div>
-  </section>
+      </section>
 
-  <!-- ── ABOUT ──────────────────────────────────────────── -->
-  <section id="section-about" class="fl-section" aria-labelledby="about-title">
-    <div class="fl-section-inner">
-      <p class="fl-eyebrow fl-animate"><span class="voxel-tag">[ CODEX ]</span> THE CONTINUOUS JOURNEY</p>
-      <h2 class="fl-section-title fl-animate" id="about-title">Where Worlds<br>Collide</h2>
-      <p style="font-size:14px;line-height:1.8;color:var(--fl-ink-muted);max-width:640px;margin:0 0 48px;"
-        class="fl-animate">
-        In Minecraft, the Farlands represent the legendary edge of terrain generation — where mathematical boundaries
-        bend,
-        creativity multiplies, and impossible voxel structures take shape.
-      </p>
-      <div class="about-grid">
-        <div class="about-card fl-animate">
-          <div class="card-voxel-header">
-            <span class="card-block-badge">[ BLOCK 01 ]</span>
-            <span class="card-dim-tag">ORIGIN</span>
-          </div>
-          <div class="card-icon-wrap">
-            <svg viewBox="0 0 32 32" class="voxel-svg-icon" aria-hidden="true">
-              <path fill="#7a8c85" d="M16 2 L28 8 L28 24 L16 30 L4 24 L4 8 Z" />
-              <path fill="#9cbb8a" d="M16 2 L28 8 L16 14 L4 8 Z" />
-              <path fill="#655342" d="M4 8 L16 14 L16 30 L4 24 Z" />
-              <path fill="#54635d" d="M28 8 L28 24 L16 30 L16 14 Z" />
-            </svg>
-          </div>
-          <h3 class="about-card-title">Vishwakarma's Legacy</h3>
-          <p class="about-card-desc">Built on the foundation of architectural precision, strength, and structural
-            mastery established in Vishwakarma.</p>
-        </div>
-        <div class="about-card fl-animate">
-          <div class="card-voxel-header">
-            <span class="card-block-badge">[ BLOCK 02 ]</span>
-            <span class="card-dim-tag">CRAFTING</span>
-          </div>
-          <div class="card-icon-wrap">
-            <svg viewBox="0 0 32 32" class="voxel-svg-icon" aria-hidden="true">
-              <path fill="#6e5845" d="M16 2 L28 8 L28 24 L16 30 L4 24 L4 8 Z" />
-              <path fill="#d4b46e" d="M16 2 L28 8 L16 14 L4 8 Z" />
-              <path fill="#c27a72" d="M4 8 L16 14 L16 30 L4 24 Z" />
-              <path fill="#a3574d" d="M28 8 L28 24 L16 30 L16 14 Z" />
-            </svg>
-          </div>
-          <h3 class="about-card-title">Voxel Innovation</h3>
-          <p class="about-card-desc">Deconstruct complex global challenges block by block. Use AI, Web3, and open tools
-            to construct the future.</p>
-        </div>
-        <div class="about-card fl-animate">
-          <div class="card-voxel-header">
-            <span class="card-block-badge">[ BLOCK 03 ]</span>
-            <span class="card-dim-tag">THE EDGE</span>
-          </div>
-          <div class="card-icon-wrap">
-            <svg viewBox="0 0 32 32" class="voxel-svg-icon" aria-hidden="true">
-              <path fill="#55645e" d="M16 2 L28 8 L28 24 L16 30 L4 24 L4 8 Z" />
-              <path fill="#9a7896" d="M16 2 L28 8 L16 14 L4 8 Z" />
-              <path fill="#7a5b77" d="M4 8 L16 14 L16 30 L4 24 Z" />
-              <path fill="#433442" d="M28 8 L28 24 L16 30 L16 14 Z" />
-            </svg>
-          </div>
-          <h3 class="about-card-title">Uncharted Territory</h3>
-          <p class="about-card-desc">Push beyond traditional hackathon limits. Discover glitches in old paradigms and
-            turn them into groundbreaking breakthroughs.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+      <!-- ── FOOTER ─────────────────────────────────────────── -->
+      <footer id="hackathon-footer" role="contentinfo">
+        <span class="footer-brand">farlands® hackathon 2026</span>
+        <span class="footer-coords">[ FARLANDS GRID · X: 12,550,821 / Y: 64 / Z: 12,550,821 ]</span>
+        <span class="footer-note">SMALL WORLD. ENDLESS PERSPECTIVES.</span>
+      </footer>
 
-  <!-- ── FAQ ────────────────────────────────────────────── -->
-  <section id="section-faq" class="fl-section" aria-labelledby="faq-title">
-    <div class="fl-section-inner">
-      <p class="fl-eyebrow fl-animate"><span class="voxel-tag">[ ARCHIVE ]</span> KNOWLEDGE BASE</p>
-      <h2 class="fl-section-title fl-animate" id="faq-title">Frequently Asked<br>Questions</h2>
-      <div class="faq-list fl-animate" role="list">
-        <details class="faq-item" role="listitem">
-          <summary>
-            <span class="faq-q-text">Who can participate in Farlands Hackathon?</span>
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </summary>
-          <p class="faq-answer">
-            Farlands Hackathon is open to all BTech / BE students. Form a squad and register to join the sprint.
-          </p>
-        </details>
-        <details class="faq-item" role="listitem">
-          <summary>
-            <span class="faq-q-text">What is the Team size limit?</span>
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </summary>
-          <p class="faq-answer">
-            Teams can consist of 2 to 4 members. We encourage squads of 2–4 for
-            a well-balanced team across design, technical engineering, and presentation.
-          </p>
-        </details>
-        <details class="faq-item" role="listitem">
-          <summary>
-            <span class="faq-q-text">Is there any registration fee?</span>
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </summary>
-          <p class="faq-answer">
-            Yes. The registration fee is ₹1,500 per team, payable via UPI after you register. </p>
-        </details>
-        <details class="faq-item" role="listitem">
-          <summary>
-            <span class="faq-q-text">How does the Farlands work?</span>
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </summary>
-          <p class="faq-answer">
-            Farlands is a 48-hour hackathon held on 14th,15th and 16th of October 2026
-            that gives participants a platform to turn their ideas and creativity into real-world
-            solutions. Bring your team, build something meaningful,
-            experiment with new technologies, and bring your imagination to life.
-          </p>
-        </details>
-      </div>
-    </div>
-  </section>
+    </div><!-- /#hackathon-content -->
 
-
-  <!-- ── REGISTRATION ────────────────────────────────────── -->
-  <section id="section-register" class="fl-section" aria-labelledby="register-title">
-    <div class="reg-header">
-      <p class="fl-eyebrow fl-animate"><span class="voxel-tag">[ TERMINAL ]</span> ENTER THE FARLANDS</p>
-      <h2 class="fl-section-title fl-animate" id="register-title">Assemble Your<br>Squad</h2>
-      <p style="font-size:14px;line-height:1.8;color:var(--fl-ink-muted);max-width:540px;" class="fl-animate">
-        Register your squad of 2 to 4 builders. Fill in your team credentials below to claim your spot on the grid.
-      </p>
-    </div>
-
-    <form class="reg-form fl-animate" id="reg-form" novalidate aria-label="Team registration form">
-      <!-- Team Name -->
-      <div class="team-name-section">
-        <div class="team-name-field">
-          <p class="team-name-label"><span class="inv-slot-icon">🏷</span> SQUAD / TEAM NAME *</p>
-          <input class="field-input team-name-input" id="team-name" name="team-name" type="text"
-            placeholder="Enter your team name (e.g. Nether Engineers)…" required aria-required="true"
-            autocomplete="off">
-        </div>
-      </div>
-
-      <!-- Teammate slots (built by JS as inventory slots) -->
-      <div id="teammates-container"></div>
-
-      <!-- Actions -->
-      <div class="reg-actions">
-        <button class="btn-add block-button" type="button" id="btn-add-teammate" aria-label="Add a teammate">
-          + Add Squad Member
-        </button>
-        <button class="btn-submit block-button-primary" type="submit" id="btn-submit-reg">
-          Register Squad Now →
-        </button>
-        <span class="reg-count" id="reg-count" aria-live="polite">2 of 4 slots filled</span>
-      </div>
-    </form>
-
-    <!-- Success state (shown after submit) -->
-    <div class="reg-success" id="reg-success" role="status" aria-live="polite">
-      <div class="reg-success-icon">🌿</div>
-      <h3 class="reg-success-title">You're in the Farlands!</h3>
-      <p class="reg-success-desc">
-        Your squad is registered. Save your <strong>Team ID</strong> — it is your login identifier.
-        Complete UPI payment next so the organizers can verify and confirm your spot.
-      </p>
-      <div class="reg-success-teamid" id="reg-success-teamid"
-        style="margin:16px 0;padding:14px 18px;border:1px solid rgba(255,255,255,0.15);border-radius:8px;background:rgba(0,0,0,0.25);">
-        <div style="font-size:12px;letter-spacing:0.08em;opacity:0.7;margin-bottom:6px;">YOUR TEAM ID</div>
-        <code id="reg-team-id-value" style="font-size:1.35rem;font-weight:700;letter-spacing:0.06em;">—</code>
-        <p style="margin:10px 0 0;font-size:13px;opacity:0.8;">Use this Team ID to sign in. Default password is the same
-          Team ID unless you set one during registration.</p>
-      </div>
-      <p class="reg-success-next" style="margin-top:12px;">
-        <a href="/payment.html" id="reg-payment-link" class="btn-primary"
-          style="display:inline-block;margin-top:8px;">Continue to UPI Payment →</a>
-      </p>
-    </div>
-  </section>
-
-  <!-- ── FINAL CTA ───────────────────────────────────────── -->
-  <section id="section-cta" aria-label="Final registration call to action">
-    <div style="max-width:800px;margin:0 auto;text-align:center;">
-      <div class="voxel-pill-badge fl-animate" style="margin:0 auto 20px;">
-        <span class="voxel-cube-dot"></span> X: 12550821 / Y: 64 / Z: 12550821
-      </div>
-      <p class="cta-eyebrow fl-animate">READY TO ENTER</p>
-      <h2 class="cta-title fl-animate">THE<br><em>FARLANDS?</em></h2>
-      <p class="cta-desc fl-animate">
-        Registration takes under 2 minutes. Bring your squad, craft your prototype, and claim your place in history.
-      </p>
-      <a href="#section-register" class="cta-btn block-cta-btn fl-animate" id="footer-cta-btn">
-        Register Your Squad Now →
-      </a>
-    </div>
-  </section>
-
-  <!-- ── FOOTER ─────────────────────────────────────────── -->
-  <footer id="hackathon-footer" role="contentinfo">
-    <span class="footer-brand">farlands® hackathon 2026</span>
-    <span class="footer-coords">[ FARLANDS GRID · X: 12,550,821 / Y: 64 / Z: 12,550,821 ]</span>
-    <span class="footer-note">SMALL WORLD. ENDLESS PERSPECTIVES.</span>
-  </footer>
-
-  </div><!-- /#hackathon-content -->
-
-  <script type="module" src="/src/main.js"></script>
-  <script type="module" src="/src/hackathon.js"></script>
-</body>
-
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/hackathon.js"></script>
+  </body>
 </html>
