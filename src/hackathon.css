@@ -1535,3 +1535,112 @@ html { scroll-behavior: smooth; }
   .nav-brand-img { height: 30px; max-width: 120px; }
   .nav-brand-logo .nav-brand-year { display: none; }
 }
+
+
+/* ── Rules & Schedule (Google Form era) ───────────────────────── */
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.rules-card {
+  background: rgba(237, 240, 232, 0.9);
+  border: 1px solid rgba(54, 94, 71, 0.14);
+  border-radius: 16px;
+  padding: 20px 18px;
+  box-shadow: 0 6px 24px rgba(41, 72, 62, 0.06);
+}
+.rules-card h3 {
+  font-family: Manrope, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #29483e;
+  margin: 0 0 12px;
+}
+.rules-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #5d776d;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+.rules-card li { margin-bottom: 6px; }
+.rules-card strong { color: #29483e; }
+
+.schedule-days {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+.schedule-day {
+  background: rgba(237, 240, 232, 0.95);
+  border: 1px solid rgba(54, 94, 71, 0.14);
+  border-radius: 16px;
+  padding: 18px;
+  overflow: hidden;
+}
+.schedule-day h3 {
+  font-family: Manrope, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #29483e;
+  margin: 0 0 14px;
+}
+.schedule-day h3 span {
+  font-weight: 600;
+  color: #5d776d;
+  font-size: 0.9rem;
+}
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.schedule-table th {
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5d776d;
+  padding: 8px 6px;
+  border-bottom: 1px solid rgba(54, 94, 71, 0.16);
+}
+.schedule-table td {
+  padding: 9px 6px;
+  border-bottom: 1px solid rgba(54, 94, 71, 0.08);
+  color: #29483e;
+  vertical-align: top;
+}
+.schedule-table td:first-child {
+  white-space: nowrap;
+  font-weight: 600;
+  color: #3c6250;
+  width: 42%;
+}
+
+.reg-gform-card {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 28px 24px;
+  background: rgba(237, 240, 232, 0.95);
+  border: 1px solid rgba(54, 94, 71, 0.16);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(41, 72, 62, 0.08);
+}
+.reg-gform-note {
+  color: #5d776d;
+  font-size: 0.95rem;
+  margin: 0 0 18px;
+  line-height: 1.5;
+}
+.reg-gform-hint {
+  margin-top: 16px;
+  font-size: 12px;
+  color: #5d776d;
+  line-height: 1.5;
+  word-break: break-all;
+}
+.reg-gform-hint code {
+  font-size: 11px;
+  color: #29483e;
+}
