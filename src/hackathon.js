@@ -171,7 +171,7 @@ function buildTeammateHTML(index) {
         <div class="field-group">
           <label class="field-label" for="tm-phone-${index}">PHONE *</label>
           <input class="field-input" id="tm-phone-${index}" name="tm-phone-${index}" type="tel"
-            placeholder="+91 00000 00000" required autocomplete="tel">
+            placeholder="Enter phone number" required autocomplete="tel">
         </div>
       </div>
     </div>
