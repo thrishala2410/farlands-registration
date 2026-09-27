@@ -112,8 +112,8 @@ function initNav() {
     });
   }
 
-  // Smooth-scroll nav links
-  nav.querySelectorAll('a[href^="#"]').forEach(link => {
+  // Smooth-scroll nav links & hero register button
+  document.querySelectorAll('#hackathon-nav a[href^="#"], #btn-hero-register').forEach(link => {
     link.addEventListener('click', e => {
       const target = document.querySelector(link.getAttribute('href'));
       if (target) {
