@@ -112,8 +112,8 @@ function initNav() {
     });
   }
 
-  // Smooth-scroll nav links
-  nav.querySelectorAll('a[href^="#"]').forEach(link => {
+  // Smooth-scroll nav links & hero register button
+  document.querySelectorAll('#hackathon-nav a[href^="#"], #btn-hero-register').forEach(link => {
     link.addEventListener('click', e => {
       const target = document.querySelector(link.getAttribute('href'));
       if (target) {
@@ -171,7 +171,7 @@ function buildTeammateHTML(index) {
         <div class="field-group">
           <label class="field-label" for="tm-phone-${index}">PHONE *</label>
           <input class="field-input" id="tm-phone-${index}" name="tm-phone-${index}" type="tel"
-            placeholder="+91 00000 00000" required autocomplete="tel">
+            placeholder="Enter phone number" required autocomplete="tel">
         </div>
       </div>
     </div>

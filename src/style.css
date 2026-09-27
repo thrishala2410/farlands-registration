@@ -82,3 +82,19 @@
   .hero-cd-unit { min-width: 44px; padding: 7px 4px; }
   .hero-cd-value { font-size: 1.05rem; }
 }
+
+/* Landing hero REGISTER NOW button */
+#scene {
+  pointer-events: none;
+}
+.intro-cta-wrap {
+  margin-top: 22px;
+  pointer-events: auto;
+}
+#btn-hero-register {
+  box-shadow: 0 4px 20px rgba(41, 72, 62, 0.18);
+  letter-spacing: 1.5px;
+}
+#btn-hero-register:hover {
+  box-shadow: 0 6px 24px rgba(41, 72, 62, 0.28);
+}
