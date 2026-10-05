@@ -17,10 +17,19 @@
          HACKATHON NAV — becomes visible when scrolled to content
     ═══════════════════════════════════════════════════════════ -->
     <nav id="hackathon-nav" aria-label="Farlands Hackathon navigation">
-      <a class="nav-brand nav-brand-logo" href="#section-hero" aria-label="Farlands Hackathon 2026">
-        <img src="/farlands%20logo.png" alt="Farlands" class="nav-brand-img" />
-        <span class="nav-brand-year">HACKATHON 2026</span>
-      </a>
+      <div class="nav-brand-group">
+        <a class="nav-brand nav-brand-logo" href="#section-hero" aria-label="Farlands Hackathon 2026">
+          <img src="/farlands%20logo.png" alt="Farlands" class="nav-brand-img" />
+          <span class="nav-brand-year">HACKATHON 2026</span>
+        </a>
+        <div class="nav-location">
+          <svg class="location-pin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span>Cambridge Institute of Technology, Bengaluru-560036</span>
+        </div>
+      </div>
       <ul class="nav-links" role="list">
         <li><a href="#section-about">About</a></li>
         <li><a href="/farlands-problem-statements.pdf" target="_blank" rel="noopener">Problem Statements</a></li>
@@ -49,11 +58,21 @@
       <div class="stage">
         <div class="sky-glow" aria-hidden="true"></div>
         <header class="header">
-          <a class="wordmark wordmark-logo" href="#" aria-label="Farlands, return to the sky"><img src="/farlands%20logo.png" alt="Farlands" class="wordmark-img" /></a>
+          <div class="header-brand-group">
+            <a class="wordmark wordmark-logo" href="#" aria-label="Farlands, return to the sky"><img src="/farlands%20logo.png" alt="Farlands" class="wordmark-img" /></a>
+            <div class="header-location">
+              <svg class="location-pin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>Cambridge Institute of Technology, Bengaluru-560036</span>
+            </div>
+          </div>
           <span class="header-note">A LITTLE WORLD OF WONDER</span>
           <button class="soundless" id="return-top" aria-label="Restart the journey">Back to the sky <span aria-hidden="true">↗</span></button>
         </header>
         <div class="intro" id="intro">
+          <p class="hero-event-date fl-animate">October 14-16th 2026</p>
           <div class="hero-countdown fl-animate" aria-label="Countdown to Farlands">
             <p class="hero-countdown-label">HACKATHON STARTS IN</p>
             <div class="hero-countdown-units">

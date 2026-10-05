@@ -1511,6 +1511,28 @@ html { scroll-behavior: smooth; }
 
 
 /* Farlands logo in sticky hackathon nav */
+.nav-brand-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.nav-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--fl-ink-muted);
+  letter-spacing: 0.1px;
+  margin-top: 1px;
+}
+.nav-location .location-pin-icon {
+  flex-shrink: 0;
+  width: 11px;
+  height: 11px;
+  stroke: var(--fl-accent);
+}
 .nav-brand.nav-brand-logo {
   display: inline-flex;
   align-items: center;
@@ -1534,6 +1556,8 @@ html { scroll-behavior: smooth; }
 @media (max-width: 700px) {
   .nav-brand-img { height: 30px; max-width: 120px; }
   .nav-brand-logo .nav-brand-year { display: none; }
+  .nav-location { font-size: 8px; letter-spacing: 0; }
+  .nav-location .location-pin-icon { width: 9px; height: 9px; }
 }
 
 
