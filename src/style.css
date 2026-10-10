@@ -144,3 +144,15 @@
 #btn-hero-register:hover {
   box-shadow: 0 6px 24px rgba(41, 72, 62, 0.28);
 }
+@media (min-width: 1024px) {
+  #section-sponsors .sponsors-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+  }
+  #section-sponsors .sponsor-card {
+    flex: 0 0 calc((100% - 48px) / 3);
+    max-width: calc((100% - 48px) / 3);
+  }
+}
